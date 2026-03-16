@@ -5,7 +5,7 @@
 // rolls back on failure.
 
 import { mediaService } from './media';
-import type { MediaItem, MediaTag, TagColor, TagCategory } from '$lib/types/media';
+import type { MediaItem, MediaTag, TagColor, TagCategory } from '@austencloud/media-manager';
 
 export interface MediaTaggingConfig {
 	getMediaItems: () => MediaItem[];

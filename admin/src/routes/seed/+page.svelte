@@ -1,39 +1,41 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import type { MediaTag, MediaItem, TagCategory, TagColor } from '$lib/types/media';
-	import { TAG_COLORS } from '$lib/types/media';
+	import type { MediaTag, MediaItem, TagCategory, TagColor } from '@austencloud/media-manager';
+	import { TAG_COLORS } from '@austencloud/media-manager';
 	import { mediaTagService, mediaItemService } from '$lib/services/media';
+	import ProgressRing from '$lib/components/loading/ProgressRing.svelte';
 
 	interface CatalogEntry {
 		filename: string;
 		garmentType?: string;
-		technique?: string;
+		technique?: string | string[];
 		colors?: string[];
 		colorFamily?: string;
 		photoType?: string;
 		size?: string;
+		sizeFromFilename?: string;
 		suggestedName?: string;
 		description?: string;
+		notes?: string;
 		[key: string]: unknown;
 	}
 
 	interface Props {
 		data: {
-			catalog: CatalogEntry[] | null;
+			catalog: { photos: CatalogEntry[]; totalPhotos: number } | null;
 			catalogPath: string;
-			error?: string;
 		};
 	}
 
 	const { data }: Props = $props();
 
-	let catalog = $state<CatalogEntry[] | null>(data.catalog);
+	let catalog = $state<CatalogEntry[] | null>(data.catalog?.photos ?? null);
 	let logs = $state<string[]>([]);
 	let seedingTags = $state(false);
 	let seedingItems = $state(false);
 	let progress = $state(0);
 	let progressTotal = $state(0);
-	let fileError = $state<string | null>(data.error ?? null);
+	let fileError = $state<string | null>(null);
 
 	const r2BaseUrl = import.meta.env.VITE_R2_PUBLIC_URL ?? '';
 
@@ -60,10 +62,10 @@
 				});
 			}
 			if (entry.technique) {
-				tagMap.set(`technique:${entry.technique}`, {
-					name: entry.technique,
-					category: 'technique'
-				});
+				const techniques = Array.isArray(entry.technique) ? entry.technique : [entry.technique];
+				for (const t of techniques) {
+					tagMap.set(`technique:${t}`, { name: t, category: 'technique' });
+				}
 			}
 			if (entry.colors) {
 				for (const color of entry.colors) {
@@ -82,8 +84,9 @@
 					category: 'photoType'
 				});
 			}
-			if (entry.size) {
-				tagMap.set(`size:${entry.size}`, { name: entry.size, category: 'size' });
+			const sizeVal = entry.sizeFromFilename || entry.size;
+			if (sizeVal) {
+				tagMap.set(`size:${sizeVal}`, { name: sizeVal, category: 'size' });
 			}
 		}
 
@@ -188,8 +191,11 @@
 					if (id) tagIds.push(id);
 				}
 				if (entry.technique) {
-					const id = tagIdMap.get(`technique:${entry.technique}`);
-					if (id) tagIds.push(id);
+					const techniques = Array.isArray(entry.technique) ? entry.technique : [entry.technique];
+					for (const t of techniques) {
+						const id = tagIdMap.get(`technique:${t}`);
+						if (id) tagIds.push(id);
+					}
 				}
 				if (entry.colors) {
 					for (const c of entry.colors) {
@@ -205,8 +211,9 @@
 					const id = tagIdMap.get(`photoType:${entry.photoType}`);
 					if (id) tagIds.push(id);
 				}
-				if (entry.size) {
-					const id = tagIdMap.get(`size:${entry.size}`);
+				const sizeVal = entry.sizeFromFilename || entry.size;
+				if (sizeVal) {
+					const id = tagIdMap.get(`size:${sizeVal}`);
 					if (id) tagIds.push(id);
 				}
 
@@ -215,11 +222,12 @@
 					tags: tagIds,
 					r2Key: `originals/${entry.filename}`,
 					r2ThumbnailKey: `thumbnails/${entry.filename}`,
-					thumbnailUrl: r2BaseUrl ? `${r2BaseUrl}/thumbnails/${entry.filename}` : '',
-					fullUrl: r2BaseUrl ? `${r2BaseUrl}/originals/${entry.filename}` : '',
+					thumbnailUrl: r2BaseUrl ? `${r2BaseUrl}/thumbnails/${encodeURIComponent(entry.filename)}` : '',
+					fullUrl: r2BaseUrl ? `${r2BaseUrl}/originals/${encodeURIComponent(entry.filename)}` : '',
 					description: entry.description ?? '',
 					suggestedName: entry.suggestedName ?? entry.filename,
-					sizeFromFilename: entry.size,
+					sizeFromFilename: entry.sizeFromFilename || entry.size,
+					notes: entry.notes,
 					needsReview: true
 				};
 
@@ -238,7 +246,36 @@
 		seedingItems = false;
 	}
 
-	let isSeeding = $derived(seedingTags || seedingItems);
+	let clearing = $state(false);
+
+	async function clearAllData() {
+		if (!confirm('Delete ALL tags and items from Firestore? This cannot be undone.')) return;
+		clearing = true;
+		log('Clearing all data...');
+
+		try {
+			const allTags = await mediaTagService.getAll();
+			const allItems = await mediaItemService.getAll();
+
+			for (const item of allItems) {
+				await mediaItemService.delete(item.id);
+			}
+			log(`  Deleted ${allItems.length} items`);
+
+			for (const tag of allTags) {
+				await mediaTagService.delete(tag.id);
+			}
+			log(`  Deleted ${allTags.length} tags`);
+
+			log('All data cleared.');
+		} catch (e) {
+			log(`ERROR clearing data: ${e}`);
+		} finally {
+			clearing = false;
+		}
+	}
+
+	let isSeeding = $derived(seedingTags || seedingItems || clearing);
 	let progressPct = $derived(progressTotal > 0 ? Math.round((progress / progressTotal) * 100) : 0);
 </script>
 
@@ -288,6 +325,13 @@
 			<h2 class="section-title">Actions</h2>
 			<div class="actions">
 				<button
+					class="action-btn danger"
+					onclick={clearAllData}
+					disabled={isSeeding}
+				>
+					{clearing ? 'Clearing...' : 'Clear All Data'}
+				</button>
+				<button
 					class="action-btn"
 					onclick={seedTags}
 					disabled={!catalog || isSeeding}
@@ -304,10 +348,15 @@
 			</div>
 
 			{#if isSeeding}
-				<div class="progress-bar-container">
-					<div class="progress-bar" style="width: {progressPct}%"></div>
+				<div class="progress-section">
+					<ProgressRing percent={progressPct} size={56} strokeWidth={5} label="{progressPct}%" />
+					<div class="progress-details">
+						<div class="progress-bar-container">
+							<div class="progress-bar" style="width: {progressPct}%"></div>
+						</div>
+						<p class="progress-text">{progress} / {progressTotal}</p>
+					</div>
 				</div>
-				<p class="progress-text">{progress} / {progressTotal} ({progressPct}%)</p>
 			{/if}
 		</section>
 
@@ -473,8 +522,27 @@
 		cursor: not-allowed;
 	}
 
-	.progress-bar-container {
+	.action-btn.danger {
+		background: var(--color-danger);
+	}
+
+	.action-btn.danger:hover:not(:disabled) {
+		background: var(--color-danger-hover);
+	}
+
+	.progress-section {
+		display: flex;
+		align-items: center;
+		gap: 16px;
 		margin-top: 16px;
+	}
+
+	.progress-details {
+		flex: 1;
+	}
+
+	.progress-bar-container {
+		margin-top: 0;
 		height: 6px;
 		background: var(--color-surface-overlay);
 		border-radius: 3px;

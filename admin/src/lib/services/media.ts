@@ -27,8 +27,8 @@ import {
 	STATE_COLLECTION,
 	STATE_DOC_ID
 } from './firebase';
-import type { MediaTag, MediaItem, MediaLibraryState } from '$lib/types/media';
-import { DEFAULT_LIBRARY_STATE } from '$lib/types/media';
+import type { MediaTag, MediaItem, MediaLibraryState } from '@austencloud/media-manager';
+import { DEFAULT_LIBRARY_STATE } from '@austencloud/media-manager';
 
 // --- Firestore data conversion ---
 

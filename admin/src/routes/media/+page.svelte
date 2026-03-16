@@ -1,15 +1,20 @@
 <script lang="ts">
-	import type { MediaTag, MediaItem, MediaLibraryState, TagColor, TagCategory } from '$lib/types/media';
-	import { DEFAULT_LIBRARY_STATE } from '$lib/types/media';
+	import type { MediaTag, MediaItem, MediaLibraryState, TagColor, TagCategory } from '@austencloud/media-manager';
+	import {
+		DEFAULT_LIBRARY_STATE,
+		MediaGrid,
+		MediaToolbar,
+		TagSidebar,
+		TagPickerPanel,
+		TagManager,
+		createMediaCurator,
+		MediaSpotlightCurator
+	} from '@austencloud/media-manager';
+	import { OCC_CATEGORY_ORDER, OCC_CATEGORY_LABELS } from '$lib/types/media';
 	import { browser } from '$app/environment';
 
-	// Components
-	import MediaGrid from '$lib/components/media/MediaGrid.svelte';
-	import MediaToolbar from '$lib/components/media/MediaToolbar.svelte';
-	import TagSidebar from '$lib/components/media/TagSidebar.svelte';
-	import TagPickerPanel from '$lib/components/media/TagPickerPanel.svelte';
+	// Local components (app-specific spotlight that uses fullUrl, etc.)
 	import MediaSpotlight from '$lib/components/media/MediaSpotlight.svelte';
-	import TagManager from '$lib/components/tags/TagManager.svelte';
 
 	// Services
 	import { mediaTagService, mediaItemService, mediaLibraryStateService } from '$lib/services/media';
@@ -40,6 +45,74 @@
 			getAllTags: () => tags,
 			setAllTags: (updated) => { tags = updated; }
 		});
+	}
+
+	// Curator for review workflow
+	const curator = createMediaCurator({
+		items: [],
+		tags: [],
+		filterMode: 'needsReview'
+	});
+
+	// Count of items needing review
+	let needsReviewCount = $derived(items.filter((i) => i.needsReview).length);
+
+	function openCurator() {
+		curator.syncItems(items);
+		curator.syncTags(tags);
+		curator.open();
+	}
+
+	async function handleCuratorTagToggle(item: MediaItem, tagId: string) {
+		if (!controller) return;
+		const tag = tags.find((t) => t.id === tagId);
+		if (!tag) return;
+		if (item.tags.includes(tagId)) {
+			await controller.removeTagFromItems([item], tag);
+		} else {
+			await controller.applyTagToItems([item], tag);
+		}
+		curator.syncItems(items);
+	}
+
+	async function handleCuratorNeedsReview(item: MediaItem, needsReview: boolean) {
+		try {
+			await mediaItemService.update(item.id, { needsReview });
+			items = items.map((i) => i.id === item.id ? { ...i, needsReview } : i);
+			curator.syncItems(items);
+		} catch (e) {
+			console.error('Failed to update needsReview:', e);
+		}
+	}
+
+	async function handleCuratorRename(item: MediaItem, newName: string) {
+		try {
+			await mediaItemService.update(item.id, { suggestedName: newName });
+			items = items.map((i) => i.id === item.id ? { ...i, suggestedName: newName } : i);
+			curator.syncItems(items);
+		} catch (e) {
+			console.error('Failed to rename:', e);
+		}
+	}
+
+	async function handleCuratorDescription(item: MediaItem, description: string) {
+		try {
+			await mediaItemService.update(item.id, { description });
+			items = items.map((i) => i.id === item.id ? { ...i, description } : i);
+			curator.syncItems(items);
+		} catch (e) {
+			console.error('Failed to update description:', e);
+		}
+	}
+
+	async function handleCuratorNotes(item: MediaItem, notes: string) {
+		try {
+			await mediaItemService.update(item.id, { notes });
+			items = items.map((i) => i.id === item.id ? { ...i, notes } : i);
+			curator.syncItems(items);
+		} catch (e) {
+			console.error('Failed to update notes:', e);
+		}
 	}
 
 	// Auto-show tag picker when items are selected
@@ -260,6 +333,8 @@
 						{tags}
 						{items}
 						activeTags={libraryState.activeTags}
+						categories={OCC_CATEGORY_ORDER}
+						categoryLabels={OCC_CATEGORY_LABELS}
 						ontoggle={handleToggleTag}
 					/>
 				</aside>
@@ -267,18 +342,26 @@
 
 			<!-- Center: Toolbar + Grid -->
 			<div class="main-content">
-				<MediaToolbar
-					totalCount={items.length}
-					selectedCount={selectedIds.size}
-					gridSize={libraryState.gridSize}
-					searchQuery={libraryState.searchQuery}
-					filterMode={libraryState.filterMode}
-					onsearchchange={handleSearch}
-					ongridsizechange={handleGridSizeChange}
-					onselectall={handleSelectAll}
-					ondeselectall={handleDeselectAll}
-					onfiltermodechange={handleFilterModeChange}
-				/>
+				<div class="toolbar-row">
+					<MediaToolbar
+						totalCount={items.length}
+						selectedCount={selectedIds.size}
+						gridSize={libraryState.gridSize}
+						searchQuery={libraryState.searchQuery}
+						filterMode={libraryState.filterMode}
+						onsearchchange={handleSearch}
+						ongridsizechange={handleGridSizeChange}
+						onselectall={handleSelectAll}
+						ondeselectall={handleDeselectAll}
+						onfiltermodechange={handleFilterModeChange}
+					/>
+					{#if needsReviewCount > 0}
+						<button class="curate-btn" onclick={openCurator}>
+							Curate
+							<span class="curate-badge">{needsReviewCount}</span>
+						</button>
+					{/if}
+				</div>
 				<MediaGrid
 					items={filteredItems}
 					{tags}
@@ -295,6 +378,8 @@
 					<TagPickerPanel
 						{tags}
 						{selectedItems}
+						categories={OCC_CATEGORY_ORDER}
+						categoryLabels={OCC_CATEGORY_LABELS}
 						onapply={handleBulkApply}
 						onremove={handleBulkRemove}
 					/>
@@ -320,10 +405,37 @@
 			{tags}
 			{items}
 			open={tagManagerOpen}
+			categories={OCC_CATEGORY_ORDER}
+			categoryLabels={OCC_CATEGORY_LABELS}
 			onclose={() => (tagManagerOpen = false)}
 			oncreate={handleTagCreate}
 			onupdate={handleTagUpdate}
 			ondelete={handleTagDelete}
+		/>
+	{/if}
+
+	<!-- Curator Spotlight -->
+	{#if curator.isOpen}
+		<MediaSpotlightCurator
+			item={curator.currentItem}
+			items={curator.workingItems}
+			currentIndex={curator.currentIndex}
+			{tags}
+			progress={curator.progress}
+			open={curator.isOpen}
+			categories={OCC_CATEGORY_ORDER}
+			categoryLabels={OCC_CATEGORY_LABELS}
+			canGoNext={curator.canGoNext}
+			canGoPrev={curator.canGoPrev}
+			onclose={() => curator.close()}
+			onnext={() => curator.next()}
+			onprev={() => curator.prev()}
+			onchange={(index) => curator.goToIndex(index)}
+			ontagtoggle={handleCuratorTagToggle}
+			onneedsreview={handleCuratorNeedsReview}
+			onrename={handleCuratorRename}
+			ondescription={handleCuratorDescription}
+			onnotes={handleCuratorNotes}
 		/>
 	{/if}
 </div>
@@ -406,7 +518,7 @@
 		display: flex;
 		flex-direction: column;
 		min-width: 0;
-		overflow: hidden;
+		overflow-y: auto;
 	}
 
 	.tag-picker-panel {
@@ -414,5 +526,48 @@
 		flex-shrink: 0;
 		border-left: 1px solid var(--color-border);
 		overflow-y: auto;
+	}
+
+	.toolbar-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.toolbar-row :global(:first-child) {
+		flex: 1;
+	}
+
+	.curate-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 6px 14px;
+		background: var(--color-accent);
+		color: white;
+		border: none;
+		border-radius: 6px;
+		font-size: 13px;
+		font-weight: 600;
+		cursor: pointer;
+		white-space: nowrap;
+		transition: background 0.15s;
+	}
+
+	.curate-btn:hover {
+		background: var(--color-accent-hover);
+	}
+
+	.curate-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 20px;
+		height: 20px;
+		padding: 0 6px;
+		background: rgba(255, 255, 255, 0.2);
+		border-radius: 10px;
+		font-size: 11px;
+		font-weight: 700;
 	}
 </style>

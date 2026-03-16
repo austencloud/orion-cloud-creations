@@ -74,13 +74,17 @@
 		const sorted = [...filteredTags];
 		switch (sortBy) {
 			case 'name':
-				sorted.sort((a, b) => a.name.localeCompare(b.name));
+				sorted.sort((a, b) => String(a.name).localeCompare(String(b.name)));
 				break;
 			case 'usage':
 				sorted.sort((a, b) => (itemCountMap.get(b.id) ?? 0) - (itemCountMap.get(a.id) ?? 0));
 				break;
 			case 'date':
-				sorted.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+				sorted.sort((a, b) => {
+					const aTime = a.createdAt instanceof Date ? a.createdAt.getTime() : (a.createdAt as any)?.toMillis?.() ?? 0;
+					const bTime = b.createdAt instanceof Date ? b.createdAt.getTime() : (b.createdAt as any)?.toMillis?.() ?? 0;
+					return bTime - aTime;
+				});
 				break;
 		}
 		return sorted;

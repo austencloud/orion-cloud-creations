@@ -116,9 +116,10 @@
 	<!-- Main content area -->
 	<div class="flex flex-1 items-center justify-center p-8 pr-[22rem]">
 		<img
-			src={item.fullUrl}
+			src={(item as any).fullUrl || item.thumbnailUrl}
 			alt={item.suggestedName || item.filename}
 			class="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
+			onerror={(e) => { const img = e.currentTarget as HTMLImageElement; if (img.src !== item.thumbnailUrl) img.src = item.thumbnailUrl; }}
 		/>
 	</div>
 

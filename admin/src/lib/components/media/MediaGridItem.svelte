@@ -5,6 +5,7 @@
 <script lang="ts">
 	import type { MediaItem, MediaTag } from '$lib/types/media';
 	import { getTagHex } from '$lib/types/media';
+	import ShimmerBlock from '$lib/components/loading/ShimmerBlock.svelte';
 
 	interface Props {
 		item: MediaItem;
@@ -15,6 +16,9 @@
 	}
 
 	const { item, selected, tags, onselect, onclick }: Props = $props();
+
+	let imageLoaded = $state(false);
+	let imageError = $state(false);
 
 	const maxVisibleTags = 3;
 	const visibleTags = $derived(tags.slice(0, maxVisibleTags));
@@ -28,14 +32,30 @@
 	onclick={onclick}
 	title={item.filename}
 >
+	<!-- Shimmer placeholder while loading -->
+	{#if !imageLoaded && !imageError}
+		<div class="absolute inset-0">
+			<ShimmerBlock width="100%" height="100%" borderRadius="0" />
+		</div>
+	{/if}
+
 	<!-- Thumbnail image -->
 	<img
 		src={item.thumbnailUrl}
 		alt={item.suggestedName || item.filename}
-		class="h-full w-full object-cover"
+		class="h-full w-full object-cover transition-opacity duration-300 {imageLoaded ? 'opacity-100' : 'opacity-0'}"
 		loading="lazy"
 		decoding="async"
+		onload={() => { imageLoaded = true; }}
+		onerror={() => { imageError = true; }}
 	/>
+
+	<!-- Error state -->
+	{#if imageError}
+		<div class="absolute inset-0 flex items-center justify-center bg-surface-raised text-text-dim text-xs">
+			No image
+		</div>
+	{/if}
 
 	<!-- Selection checkbox (top-left) -->
 	<div

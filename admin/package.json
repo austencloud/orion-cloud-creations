@@ -21,7 +21,9 @@
   },
   "dependencies": {
     "firebase": "^11.4.0",
-    "@aws-sdk/client-s3": "^3.750.0"
+    "@aws-sdk/client-s3": "^3.750.0",
+    "@austencloud/media-manager": "file:F:/_CODE/shared-packages/packages/media-manager",
+    "@austencloud/media-spotlight": "file:F:/_CODE/shared-packages/packages/media-spotlight"
   },
   "type": "module"
 }
