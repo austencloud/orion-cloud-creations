@@ -1,0 +1,20 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Media tags - full access (admin-only app)
+    match /mediaTags/{tagId} {
+      allow read, write: if true;
+    }
+
+    // Media items - full access (admin-only app)
+    match /mediaItems/{itemId} {
+      allow read, write: if true;
+    }
+
+    // Library state - full access (admin-only app)
+    match /mediaLibraryState/{docId} {
+      allow read, write: if true;
+    }
+  }
+}
