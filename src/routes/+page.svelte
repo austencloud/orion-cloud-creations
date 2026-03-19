@@ -420,7 +420,7 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		transition: transform 500ms var(--ease-out);
+		transition: transform var(--duration-dramatic) var(--ease-out);
 	}
 
 	.technique-card:hover .technique-img {
