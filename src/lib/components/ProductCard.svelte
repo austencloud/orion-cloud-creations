@@ -1,13 +1,15 @@
 <script lang="ts">
-	import type { Product } from '$lib/types/product';
-	import { formatPrice } from '$lib/data/products';
+	import type { StorefrontProduct } from '$lib/types/product';
+	import { formatPrice } from '$lib/types/product';
 
 	interface Props {
-		product: Product;
+		product: StorefrontProduct;
 		showPrice?: boolean;
 	}
 
 	let { product, showPrice = true }: Props = $props();
+
+	const heroImage = product.images[0];
 </script>
 
 <a
@@ -15,12 +17,18 @@
 	class="group block no-underline"
 >
 	<div class="relative overflow-hidden bg-warm-white rounded-sm aspect-square">
-		<img
-			src={product.images[0].url}
-			alt={product.images[0].alt}
-			class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-			loading="lazy"
-		/>
+		{#if heroImage}
+			<img
+				src={heroImage.thumbnailUrl}
+				alt={product.title}
+				class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+				loading="lazy"
+			/>
+		{:else}
+			<div class="w-full h-full bg-warm-white flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
+				<span class="text-xs text-muted opacity-40">{product.title}</span>
+			</div>
+		{/if}
 		{#if product.availability === 'sold'}
 			<div class="absolute top-3 left-3 bg-charcoal/80 text-white text-xs font-medium px-3 py-1 uppercase tracking-wider">
 				Sold
