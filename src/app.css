@@ -1,6 +1,6 @@
 /* ── Shared Foundation ── */
-@import '@austencloud/theme/css/index.css';
-@import '@austencloud/backgrounds/css/index.css';
+@import '@austencloud/theme/css';
+@import '@austencloud/backgrounds/css';
 
 /* ── OCC Brand Tokens ── */
 :root {

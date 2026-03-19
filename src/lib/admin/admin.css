@@ -1,8 +1,7 @@
-@import 'tailwindcss';
 @import '@austencloud/media-manager/css/media-manager-tokens.css';
 @import '@austencloud/sidebar/css/sidebar-tokens.css';
 
-@theme {
+:root {
 	--font-sans: 'Inter', system-ui, sans-serif;
 
 	--color-surface: #1a1a2e;
