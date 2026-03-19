@@ -18,16 +18,19 @@
 		const sizeVariant = product.sizes[size];
 		if (!sizeVariant) return;
 
-		cart.add({
-			productId: product.id,
-			title: product.title,
-			size,
-			price: product.price,
-			thumbnailUrl: product.images[0]?.thumbnailUrl ?? ''
-		}, sizeVariant.stock);
+		cart.add(
+			{
+				productId: product.id,
+				title: product.title,
+				size,
+				price: product.price,
+				thumbnailUrl: product.images[0]?.thumbnailUrl ?? ''
+			},
+			sizeVariant.stock
+		);
 
 		addedToCart = true;
-		setTimeout(() => addedToCart = false, 2000);
+		setTimeout(() => (addedToCart = false), 2000);
 	}
 </script>
 
@@ -36,108 +39,94 @@
 	<meta name="description" content={product.description} />
 </svelte:head>
 
-<div class="mx-auto max-w-7xl px-6 lg:px-8 py-8 lg:py-12">
-	<!-- Breadcrumb -->
-	<nav class="mb-8 text-xs text-light-muted">
-		<a href="/" class="hover:text-charcoal transition-colors">Home</a>
-		<span class="mx-2">/</span>
-		<a href="/shop" class="hover:text-charcoal transition-colors">Shop</a>
-		<span class="mx-2">/</span>
-		<span class="text-charcoal">{product.title}</span>
+<div class="page">
+	<nav class="breadcrumb">
+		<a href="/">Home</a>
+		<span class="sep">/</span>
+		<a href="/shop">Shop</a>
+		<span class="sep">/</span>
+		<span class="current">{product.title}</span>
 	</nav>
 
-	<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+	<div class="product-layout">
 		<!-- Images -->
-		<div class="space-y-4">
-			<div class="aspect-square overflow-hidden bg-warm-white rounded-sm">
+		<div class="images">
+			<div class="main-image">
 				{#if mainImage}
-					<img
-						src={mainImage.thumbnailUrl}
-						alt={product.title}
-						class="w-full h-full object-cover"
-					/>
+					<img src={mainImage.thumbnailUrl} alt={product.title} />
 				{:else}
-					<div class="w-full h-full flex items-center justify-center">
-						<span class="text-muted opacity-40 text-sm">Photo coming soon</span>
+					<div class="no-image">
+						<span>Photo coming soon</span>
 					</div>
 				{/if}
 			</div>
 
 			{#if product.images.length > 1}
-				<div class="flex gap-3 overflow-x-auto">
+				<div class="thumbnails">
 					{#each product.images as image, i}
 						<button
-							class="w-16 h-16 flex-shrink-0 overflow-hidden rounded-sm border-2 transition-colors
-								{selectedImageIndex === i ? 'border-charcoal' : 'border-transparent hover:border-border'}"
-							onclick={() => selectedImageIndex = i}
+							class="thumb"
+							class:active={selectedImageIndex === i}
+							onclick={() => (selectedImageIndex = i)}
 						>
-							<img src={image.thumbnailUrl} alt="{product.title} view {i + 1}" class="w-full h-full object-cover" />
+							<img src={image.thumbnailUrl} alt="{product.title} view {i + 1}" />
 						</button>
 					{/each}
 				</div>
 			{/if}
 		</div>
 
-		<!-- Product Info -->
-		<div class="lg:py-4">
+		<!-- Info -->
+		<div class="info">
 			{#if product.isOneOfAKind}
-				<p class="text-xs font-medium uppercase tracking-[0.2em] text-accent-purple mb-3">
-					One of a Kind
-				</p>
+				<p class="label">One of a Kind</p>
 			{/if}
 
-			<h1 class="text-2xl lg:text-3xl font-light text-charcoal">{product.title}</h1>
+			<h1 class="title">{product.title}</h1>
 
 			{#if product.availability === 'available'}
-				<p class="mt-3 text-xl text-charcoal font-medium">
-					{formatPrice(product.price)}
-				</p>
+				<p class="price">{formatPrice(product.price)}</p>
 			{:else}
-				<p class="mt-3 text-lg text-light-muted italic">Sold</p>
+				<p class="sold-price">Sold</p>
 			{/if}
 
-			<p class="mt-6 text-muted text-sm leading-relaxed">
-				{product.description}
-			</p>
+			<p class="description">{product.description}</p>
 
-			<!-- Details -->
-			<div class="mt-8 space-y-4 text-sm border-t border-border-light pt-6">
-				<div class="flex gap-2">
-					<span class="text-light-muted w-24">Material</span>
-					<span class="text-charcoal">{product.material}</span>
+			<div class="details">
+				<div class="detail-row">
+					<span class="detail-label">Material</span>
+					<span class="detail-value">{product.material}</span>
 				</div>
 				{#if product.techniques.length > 0}
-					<div class="flex gap-2">
-						<span class="text-light-muted w-24">Technique</span>
-						<span class="text-charcoal capitalize">{product.techniques.map((t) => t.replace('_', ' ')).join(', ')}</span>
+					<div class="detail-row">
+						<span class="detail-label">Technique</span>
+						<span class="detail-value capitalize">{product.techniques.map((t) => t.replace('_', ' ')).join(', ')}</span>
 					</div>
 				{/if}
 				{#if product.colorway.length > 0}
-					<div class="flex gap-2">
-						<span class="text-light-muted w-24">Colors</span>
-						<span class="text-charcoal">{product.colorway.join(', ')}</span>
+					<div class="detail-row">
+						<span class="detail-label">Colors</span>
+						<span class="detail-value">{product.colorway.join(', ')}</span>
 					</div>
 				{/if}
-				<div class="flex gap-2">
-					<span class="text-light-muted w-24">Type</span>
-					<span class="text-charcoal capitalize">{product.garmentType.replace('_', ' ')}</span>
+				<div class="detail-row">
+					<span class="detail-label">Type</span>
+					<span class="detail-value capitalize">{product.garmentType.replace('_', ' ')}</span>
 				</div>
 			</div>
 
 			{#if product.availability === 'available'}
-				<!-- Size Selection -->
-				<div class="mt-8">
-					<p class="text-sm font-medium text-charcoal mb-3">Size</p>
-					<div class="flex flex-wrap gap-3">
+				<div class="size-section">
+					<p class="size-heading">Size</p>
+					<div class="size-grid">
 						{#each Object.entries(product.sizes) as [size, variant]}
 							<button
-								class="w-14 h-10 text-sm font-medium border transition-colors
-									{variant.stock === 0
-										? 'border-border text-light-muted line-through cursor-not-allowed opacity-40'
-										: selectedSize === size
-											? 'border-charcoal bg-charcoal text-white'
-											: 'border-border text-muted hover:border-charcoal hover:text-charcoal'}"
-								onclick={() => { if (variant.stock > 0) selectedSize = size as Size; }}
+								class="size-btn"
+								class:active={selectedSize === size}
+								class:oos={variant.stock === 0}
+								onclick={() => {
+									if (variant.stock > 0) selectedSize = size as Size;
+								}}
 								disabled={variant.stock === 0}
 							>
 								{size}
@@ -146,47 +135,42 @@
 					</div>
 				</div>
 
-				<!-- Add to Cart -->
 				<button
-					class="mt-8 w-full py-4 bg-charcoal text-white text-sm font-semibold uppercase tracking-wider hover:bg-charcoal/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					class="add-to-cart"
 					disabled={!selectedSize}
 					onclick={handleAddToCart}
 				>
 					{addedToCart ? 'Added!' : selectedSize ? 'Add to Cart' : 'Select a Size'}
 				</button>
 
-				<p class="mt-4 text-xs text-light-muted text-center">
-					Free shipping on orders over $100
-				</p>
+				<p class="shipping-note">Free shipping on orders over $100</p>
 			{/if}
 
-			<!-- Trust Signals -->
-			<div class="mt-10 pt-6 border-t border-border-light grid grid-cols-2 gap-4">
-				<div class="text-xs text-muted">
-					<p class="font-medium text-charcoal mb-1">Colorfast</p>
+			<div class="trust-grid">
+				<div class="trust-item">
+					<p class="trust-title">Colorfast</p>
 					<p>Procion dyes bond permanently. Won't fade or bleed.</p>
 				</div>
-				<div class="text-xs text-muted">
-					<p class="font-medium text-charcoal mb-1">Handmade</p>
+				<div class="trust-item">
+					<p class="trust-title">Handmade</p>
 					<p>Folded, dyed, and finished by hand in Chicago.</p>
 				</div>
-				<div class="text-xs text-muted">
-					<p class="font-medium text-charcoal mb-1">Machine Washable</p>
+				<div class="trust-item">
+					<p class="trust-title">Machine Washable</p>
 					<p>Wash and dry normally after first cold wash.</p>
 				</div>
-				<div class="text-xs text-muted">
-					<p class="font-medium text-charcoal mb-1">100% Cotton</p>
+				<div class="trust-item">
+					<p class="trust-title">100% Cotton</p>
 					<p>Dye goes all the way through the fiber.</p>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- Related Products -->
 	{#if related.length > 0}
-		<section class="mt-20 lg:mt-28 pt-12 border-t border-border-light">
-			<h2 class="text-xl font-light text-charcoal mb-8">More Pieces</h2>
-			<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+		<section class="related">
+			<h2 class="related-title">More Pieces</h2>
+			<div class="related-grid">
 				{#each related as relatedProduct}
 					<ProductCard product={relatedProduct} />
 				{/each}
@@ -194,3 +178,322 @@
 		</section>
 	{/if}
 </div>
+
+<style>
+	.page {
+		max-width: 80rem;
+		margin: 0 auto;
+		padding: 2rem var(--spacing-md);
+	}
+
+	/* Breadcrumb */
+	.breadcrumb {
+		margin-bottom: 2rem;
+		font-size: var(--font-size-compact);
+		color: var(--occ-light-muted);
+	}
+
+	.breadcrumb a {
+		transition: color var(--duration-normal) var(--ease-out);
+	}
+
+	.breadcrumb a:hover {
+		color: var(--occ-charcoal);
+	}
+
+	.sep {
+		margin: 0 0.5rem;
+	}
+
+	.current {
+		color: var(--occ-charcoal);
+	}
+
+	/* Layout */
+	.product-layout {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+	}
+
+	/* Images */
+	.images {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.main-image {
+		aspect-ratio: 1;
+		overflow: hidden;
+		background: var(--occ-warm-white);
+		border-radius: 2px;
+	}
+
+	.main-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.no-image {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.no-image span {
+		color: var(--occ-muted);
+		opacity: 0.4;
+		font-size: var(--font-size-sm);
+	}
+
+	.thumbnails {
+		display: flex;
+		gap: 0.75rem;
+		overflow-x: auto;
+	}
+
+	.thumb {
+		width: 4rem;
+		height: 4rem;
+		flex-shrink: 0;
+		overflow: hidden;
+		border-radius: 2px;
+		border: 2px solid transparent;
+		padding: 0;
+		transition: border-color var(--duration-normal) var(--ease-out);
+	}
+
+	.thumb.active {
+		border-color: var(--occ-charcoal);
+	}
+
+	.thumb:not(.active):hover {
+		border-color: var(--occ-border);
+	}
+
+	.thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	/* Info */
+	.info {
+		padding: 0;
+	}
+
+	.label {
+		font-size: var(--font-size-compact);
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		color: var(--occ-purple);
+		margin-bottom: 0.75rem;
+	}
+
+	.title {
+		font-size: 1.5rem;
+		font-weight: 300;
+		color: var(--occ-charcoal);
+	}
+
+	.price {
+		margin-top: 0.75rem;
+		font-size: 1.25rem;
+		color: var(--occ-charcoal);
+		font-weight: 500;
+	}
+
+	.sold-price {
+		margin-top: 0.75rem;
+		font-size: 1.125rem;
+		color: var(--occ-light-muted);
+		font-style: italic;
+	}
+
+	.description {
+		margin-top: 1.5rem;
+		color: var(--occ-muted);
+		font-size: var(--font-size-sm);
+		line-height: 1.625;
+	}
+
+	/* Details */
+	.details {
+		margin-top: 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		font-size: var(--font-size-sm);
+		border-top: 1px solid var(--occ-border-light);
+		padding-top: 1.5rem;
+	}
+
+	.detail-row {
+		display: flex;
+		gap: 0.5rem;
+	}
+
+	.detail-label {
+		color: var(--occ-light-muted);
+		width: 6rem;
+	}
+
+	.detail-value {
+		color: var(--occ-charcoal);
+	}
+
+	.capitalize {
+		text-transform: capitalize;
+	}
+
+	/* Size */
+	.size-section {
+		margin-top: 2rem;
+	}
+
+	.size-heading {
+		font-size: var(--font-size-sm);
+		font-weight: 500;
+		color: var(--occ-charcoal);
+		margin-bottom: 0.75rem;
+	}
+
+	.size-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.size-btn {
+		width: 3.5rem;
+		height: 2.5rem;
+		font-size: var(--font-size-sm);
+		font-weight: 500;
+		border: 1px solid var(--occ-border);
+		color: var(--occ-muted);
+		transition: all var(--duration-normal) var(--ease-out);
+	}
+
+	.size-btn:hover:not(.oos) {
+		border-color: var(--occ-charcoal);
+		color: var(--occ-charcoal);
+	}
+
+	.size-btn.active {
+		border-color: var(--occ-charcoal);
+		background: var(--occ-charcoal);
+		color: white;
+	}
+
+	.size-btn.oos {
+		color: var(--occ-light-muted);
+		text-decoration: line-through;
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+
+	/* Add to Cart */
+	.add-to-cart {
+		margin-top: 2rem;
+		width: 100%;
+		padding: 1rem;
+		background: var(--occ-charcoal);
+		color: white;
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		transition: background var(--duration-normal) var(--ease-out);
+	}
+
+	.add-to-cart:hover:not(:disabled) {
+		background: rgba(26, 26, 26, 0.9);
+	}
+
+	.add-to-cart:disabled {
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+
+	.shipping-note {
+		margin-top: 1rem;
+		font-size: var(--font-size-compact);
+		color: var(--occ-light-muted);
+		text-align: center;
+	}
+
+	/* Trust Signals */
+	.trust-grid {
+		margin-top: 2.5rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--occ-border-light);
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+
+	.trust-item {
+		font-size: var(--font-size-compact);
+		color: var(--occ-muted);
+	}
+
+	.trust-title {
+		font-weight: 500;
+		color: var(--occ-charcoal);
+		margin-bottom: 0.25rem;
+	}
+
+	/* Related */
+	.related {
+		margin-top: 5rem;
+		padding-top: 3rem;
+		border-top: 1px solid var(--occ-border-light);
+	}
+
+	.related-title {
+		font-size: 1.25rem;
+		font-weight: 300;
+		color: var(--occ-charcoal);
+		margin-bottom: 2rem;
+	}
+
+	.related-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem;
+	}
+
+	@media (min-width: 768px) {
+		.related-grid {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.page {
+			padding: 3rem var(--spacing-lg);
+		}
+
+		.product-layout {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 4rem;
+		}
+
+		.info {
+			padding-top: 1rem;
+		}
+
+		.title {
+			font-size: var(--font-size-3xl);
+		}
+
+		.related {
+			margin-top: 7rem;
+		}
+	}
+</style>
