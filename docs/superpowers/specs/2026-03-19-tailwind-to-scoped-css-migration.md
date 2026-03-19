@@ -247,12 +247,46 @@ Admin pages (`/admin/**`) can be migrated separately — they already use scoped
 
 ---
 
+## CRITICAL: Background + Content Integration Rules
+
+A partial migration was attempted and left the site broken. These are the lessons learned:
+
+### The Problem
+
+When you put a dark animated background (Deep Ocean) behind content that was designed for a light static background, everything breaks:
+- Text becomes invisible (dark text on dark background)
+- Buttons with transparent backgrounds disappear
+- Opaque section backgrounds (white techniques, dark charcoal newsletter) create jarring blocks that interrupt the background
+- The header is a plain white bar that clashes with everything
+
+### The Rules
+
+1. **Every content section MUST have a glass panel background** — use `backdrop-filter: blur()` with semi-transparent backgrounds so the ocean shows through but text is readable. No opaque white blocks. No opaque dark blocks.
+
+2. **The header MUST be glass** — semi-transparent with blur, not solid white. It should feel like part of the scene, not pasted on top.
+
+3. **The footer MUST be glass** — same treatment as header.
+
+4. **Buttons and filter chips MUST have visible backgrounds** — they cannot be transparent border-only elements on a dark animated background. Use glass/solid fills.
+
+5. **The hero section needs to be rethought** — an 85vh hero image on top of an animated background means the background is invisible for the first scroll. Consider: smaller hero, or no hero image (let the products and background speak), or hero as a glass overlay with text only.
+
+6. **Remove opaque section backgrounds** — the techniques section (white bg) and newsletter section (charcoal bg) should use glass panels or transparent backgrounds, not solid colors that block the background.
+
+7. **Text colors must work on glass-over-dark** — cream/white text, not charcoal. Or use high-contrast glass panels where charcoal text is readable.
+
+8. **Test every page with the background running** — don't just convert the CSS mechanically. Every page needs to be visually verified with the animated background active.
+
+### Design Language: Glass Panels Over Ocean
+
+Think of TKA's approach — transparent modules floating over the animated background, with `backdrop-filter: blur(12-20px)` and semi-transparent backgrounds. Content lives in glass panels. The background is the atmosphere, not competing with content.
+
+---
+
 ## Out of Scope
 
 - Admin page migration (already scoped CSS, can be aligned later)
-- New page designs or layout changes (1:1 visual parity with current Tailwind version)
 - SEO, structured data, OG tags
-- Dark mode (OCC is light-theme only for now)
 
 ---
 
@@ -273,4 +307,7 @@ Admin pages (`/admin/**`) can be migrated separately — they already use scoped
 5. Transitions use shared duration/easing tokens
 6. Animated canvas background renders behind the storefront
 7. `prefers-reduced-motion` respected globally
-8. Visual parity with current design (same colors, spacing, typography — just implemented differently)
+8. All content sections use glass panels — no opaque blocks breaking the background
+9. Header and footer are glass/semi-transparent, not solid white
+10. Every page visually verified with background animation running
+11. Shop page shows products (not 0) with readable filter buttons
