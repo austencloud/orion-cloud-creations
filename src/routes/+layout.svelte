@@ -2,8 +2,11 @@
 	import '../app.css';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import { page } from '$app/state';
 
 	let { children } = $props();
+
+	let isAdmin = $derived(page.url.pathname.startsWith('/admin'));
 </script>
 
 <svelte:head>
@@ -12,10 +15,14 @@
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </svelte:head>
 
-<div class="min-h-screen flex flex-col">
-	<Header />
-	<main class="flex-1 pt-16 lg:pt-20">
-		{@render children()}
-	</main>
-	<Footer />
-</div>
+{#if isAdmin}
+	{@render children()}
+{:else}
+	<div class="min-h-screen flex flex-col">
+		<Header />
+		<main class="flex-1 pt-16 lg:pt-20">
+			{@render children()}
+		</main>
+		<Footer />
+	</div>
+{/if}

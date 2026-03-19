@@ -1,5 +1,7 @@
 import type { Product } from '$lib/types/product';
 
+const now = new Date('2026-01-01');
+
 export const products: Product[] = [
 	{
 		id: '001',
@@ -11,20 +13,16 @@ export const products: Product[] = [
 		techniques: ['ice_dye', 'mandala'],
 		colorway: ['cyan', 'deep blue', 'purple'],
 		colorFamily: 'cool',
-		sizes: ['S', 'M', 'L', 'XL'],
+		sizes: { S: { stock: 1 }, M: { stock: 1 }, L: { stock: 1 }, XL: { stock: 1 } },
 		material: '100% cotton, Gildan Softstyle',
 		availability: 'available',
 		isOneOfAKind: true,
 		price: 5500,
-		images: [
-			{
-				url: '/images/products/blue-mandala.jpg',
-				alt: 'Ice dye mandala t-shirt with radiant cyan center fading to deep blue and purple',
-				type: 'flat_lay'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: true,
-		tags: ['mandala', 'ice dye', 'blue', 'purple', 'geometric']
+		createdAt: now,
+		updatedAt: now
 	},
 	{
 		id: '002',
@@ -36,20 +34,16 @@ export const products: Product[] = [
 		techniques: ['ice_dye', 'mandala'],
 		colorway: ['gold', 'orange', 'crimson', 'magenta', 'purple'],
 		colorFamily: 'warm',
-		sizes: ['S', 'M', 'L', 'XL'],
+		sizes: { S: { stock: 1 }, M: { stock: 1 }, L: { stock: 1 }, XL: { stock: 1 } },
 		material: '100% cotton, Gildan Softstyle',
 		availability: 'available',
 		isOneOfAKind: true,
 		price: 5500,
-		images: [
-			{
-				url: '/images/products/fire-mandala.jpg',
-				alt: 'Ice dye mandala t-shirt with golden center radiating through crimson to purple edges',
-				type: 'flat_lay'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: true,
-		tags: ['mandala', 'ice dye', 'fire', 'orange', 'red', 'warm']
+		createdAt: now,
+		updatedAt: now
 	},
 	{
 		id: '003',
@@ -61,20 +55,16 @@ export const products: Product[] = [
 		techniques: ['ice_dye', 'shibori'],
 		colorway: ['purple', 'gold', 'teal', 'orange'],
 		colorFamily: 'rainbow',
-		sizes: ['M', 'L', 'XL'],
+		sizes: { M: { stock: 1 }, L: { stock: 1 }, XL: { stock: 1 } },
 		material: '100% cotton, Gildan Softstyle',
 		availability: 'available',
 		isOneOfAKind: true,
 		price: 5500,
-		images: [
-			{
-				url: '/images/products/ice-dye-kaleidoscope.jpg',
-				alt: 'Ice dye kaleidoscope pattern t-shirt in purple, gold, teal, and orange',
-				type: 'flat_lay'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: true,
-		tags: ['kaleidoscope', 'ice dye', 'symmetry', 'multicolor']
+		createdAt: now,
+		updatedAt: now
 	},
 	{
 		id: '004',
@@ -86,20 +76,16 @@ export const products: Product[] = [
 		techniques: ['shibori'],
 		colorway: ['neon teal', 'rainbow', 'black'],
 		colorFamily: 'cool',
-		sizes: ['S', 'M', 'L', 'XL'],
+		sizes: { S: { stock: 1 }, M: { stock: 1 }, L: { stock: 1 }, XL: { stock: 1 } },
 		material: '100% cotton, Gildan Softstyle',
 		availability: 'available',
 		isOneOfAKind: true,
 		price: 5500,
-		images: [
-			{
-				url: '/images/products/psychedelic-ripple.jpg',
-				alt: 'Psychedelic concentric ripple pattern t-shirt in neon teal with rainbow accents',
-				type: 'flat_lay'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: true,
-		tags: ['ripple', 'shibori', 'psychedelic', 'teal', 'neon']
+		createdAt: now,
+		updatedAt: now
 	},
 	{
 		id: '005',
@@ -111,20 +97,16 @@ export const products: Product[] = [
 		techniques: ['starburst'],
 		colorway: ['yellow', 'green', 'orange', 'red', 'purple', 'black'],
 		colorFamily: 'rainbow',
-		sizes: ['M', 'L', 'XL', '2XL'],
+		sizes: { M: { stock: 1 }, L: { stock: 1 }, XL: { stock: 1 }, '2XL': { stock: 1 } },
 		material: '100% cotton, Gildan Heavy Cotton',
 		availability: 'available',
 		isOneOfAKind: true,
 		price: 5000,
-		images: [
-			{
-				url: '/images/products/rainbow-starburst.jpg',
-				alt: 'Rainbow starburst pattern t-shirt with bold color rays against black',
-				type: 'flat_lay'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: false,
-		tags: ['starburst', 'rainbow', 'bold', 'high contrast']
+		createdAt: now,
+		updatedAt: now
 	},
 	{
 		id: '006',
@@ -136,20 +118,16 @@ export const products: Product[] = [
 		techniques: ['spiral', 'reverse'],
 		colorway: ['rainbow', 'black'],
 		colorFamily: 'rainbow',
-		sizes: ['S', 'M', 'L', 'XL'],
+		sizes: { S: { stock: 1 }, M: { stock: 1 }, L: { stock: 1 }, XL: { stock: 1 } },
 		material: '100% cotton, Gildan Softstyle',
 		availability: 'available',
 		isOneOfAKind: true,
 		price: 5000,
-		images: [
-			{
-				url: '/images/products/reverse-spiral-rainbow.jpg',
-				alt: 'Reverse dye spiral t-shirt with rainbow colors on black',
-				type: 'flat_lay'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: false,
-		tags: ['spiral', 'reverse dye', 'rainbow', 'classic']
+		createdAt: now,
+		updatedAt: now
 	},
 	{
 		id: '007',
@@ -161,20 +139,16 @@ export const products: Product[] = [
 		techniques: ['spiral'],
 		colorway: ['rainbow', 'black'],
 		colorFamily: 'rainbow',
-		sizes: ['M', 'L', 'XL'],
+		sizes: { M: { stock: 1 }, L: { stock: 1 }, XL: { stock: 1 } },
 		material: '100% cotton, Gildan Softstyle',
 		availability: 'available',
 		isOneOfAKind: true,
 		price: 5000,
-		images: [
-			{
-				url: '/images/products/classic-spiral-rainbow.jpg',
-				alt: 'Classic rainbow spiral t-shirt with full color spectrum',
-				type: 'flat_lay'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: false,
-		tags: ['spiral', 'rainbow', 'classic', 'bold']
+		createdAt: now,
+		updatedAt: now
 	},
 	{
 		id: '008',
@@ -186,20 +160,16 @@ export const products: Product[] = [
 		techniques: ['spiral'],
 		colorway: ['cyan', 'blue', 'purple', 'lavender'],
 		colorFamily: 'cool',
-		sizes: ['M', 'L', 'XL'],
+		sizes: { M: { stock: 1 }, L: { stock: 1 }, XL: { stock: 1 } },
 		material: '100% cotton, lightweight',
 		availability: 'available',
 		isOneOfAKind: true,
 		price: 7500,
-		images: [
-			{
-				url: '/images/products/ocean-spiral-hoodie.jpg',
-				alt: 'Lightweight hoodie with ocean blue and purple double spiral pattern',
-				type: 'flat_lay'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: true,
-		tags: ['hoodie', 'spiral', 'ocean', 'blue', 'outerwear']
+		createdAt: now,
+		updatedAt: now
 	},
 	{
 		id: '009',
@@ -211,50 +181,37 @@ export const products: Product[] = [
 		techniques: ['shibori'],
 		colorway: ['gold', 'orange', 'purple', 'blue'],
 		colorFamily: 'warm',
-		sizes: ['S', 'M', 'L'],
+		sizes: { S: { stock: 1 }, M: { stock: 1 }, L: { stock: 1 } },
 		material: '100% cotton, Gildan Softstyle',
 		availability: 'available',
 		isOneOfAKind: true,
 		price: 5500,
-		images: [
-			{
-				url: '/images/products/golden-shibori-grid.jpg',
-				alt: 'Geometric shibori grid pattern t-shirt in gold, orange, purple, and blue',
-				type: 'flat_lay'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: false,
-		tags: ['shibori', 'geometric', 'grid', 'gold', 'structured']
+		createdAt: now,
+		updatedAt: now
 	},
 	{
 		id: '010',
 		slug: 'rose-ice-dye-tank',
 		title: 'Rose Ice Dye Tank',
 		description:
-			'Women\'s racerback tank with rich rose and magenta ice dye crumple pattern. Deep purples and greens emerge organically through the ice melt process. Ribbed cotton for a fitted silhouette.',
+			"Women's racerback tank with rich rose and magenta ice dye crumple pattern. Deep purples and greens emerge organically through the ice melt process. Ribbed cotton for a fitted silhouette.",
 		garmentType: 'tank',
 		techniques: ['ice_dye', 'crumple'],
 		colorway: ['rose', 'magenta', 'purple', 'green'],
 		colorFamily: 'warm',
-		sizes: ['S', 'M', 'L'],
+		sizes: { S: { stock: 1 }, M: { stock: 1 }, L: { stock: 1 } },
 		material: '100% cotton, ribbed',
 		availability: 'available',
 		isOneOfAKind: true,
 		price: 4500,
-		images: [
-			{
-				url: '/images/products/rose-ice-dye-tank.jpg',
-				alt: 'Rose and magenta ice dye crumple pattern tank top on mannequin',
-				type: 'hero'
-			},
-			{
-				url: '/images/products/rose-ice-dye-tank-alt.jpg',
-				alt: 'Rose ice dye tank top alternate angle showing crumple pattern detail',
-				type: 'detail'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: false,
-		tags: ['tank', 'ice dye', 'rose', 'women', 'fitted']
+		createdAt: now,
+		updatedAt: now
 	},
 	{
 		id: '011',
@@ -266,20 +223,16 @@ export const products: Product[] = [
 		techniques: ['shibori'],
 		colorway: ['green', 'purple', 'blue', 'gold'],
 		colorFamily: 'cool',
-		sizes: ['M', 'L', 'XL'],
+		sizes: { M: { stock: 1 }, L: { stock: 1 }, XL: { stock: 1 } },
 		material: '100% cotton, Gildan Long Sleeve',
 		availability: 'available',
 		isOneOfAKind: true,
 		price: 6000,
-		images: [
-			{
-				url: '/images/products/owl-shibori-longsleeve.jpg',
-				alt: 'Long sleeve shirt with symmetric shibori pattern in green, purple, and blue',
-				type: 'flat_lay'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: false,
-		tags: ['long sleeve', 'shibori', 'symmetric', 'green', 'purple']
+		createdAt: now,
+		updatedAt: now
 	},
 	{
 		id: '012',
@@ -291,20 +244,16 @@ export const products: Product[] = [
 		techniques: ['ice_dye', 'shibori'],
 		colorway: ['gold', 'orange', 'magenta', 'blue', 'purple'],
 		colorFamily: 'rainbow',
-		sizes: ['M', 'L', 'XL', '2XL'],
+		sizes: { M: { stock: 1 }, L: { stock: 1 }, XL: { stock: 1 }, '2XL': { stock: 1 } },
 		material: '100% cotton, Gildan Softstyle',
 		availability: 'available',
 		isOneOfAKind: true,
 		price: 5500,
-		images: [
-			{
-				url: '/images/products/sunset-ice-crackle.jpg',
-				alt: 'Sunset gradient ice crackle t-shirt with warm top and cool crystalline bottom',
-				type: 'flat_lay'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: true,
-		tags: ['ice dye', 'shibori', 'sunset', 'gradient', 'split palette']
+		createdAt: now,
+		updatedAt: now
 	},
 	{
 		id: '013',
@@ -316,20 +265,16 @@ export const products: Product[] = [
 		techniques: ['spiral', 'reverse'],
 		colorway: ['forest green', 'magenta', 'teal', 'black'],
 		colorFamily: 'cool',
-		sizes: ['S', 'M', 'L'],
+		sizes: { S: { stock: 0 }, M: { stock: 0 }, L: { stock: 0 } },
 		material: '100% cotton',
 		availability: 'sold',
 		isOneOfAKind: true,
 		price: 5000,
-		images: [
-			{
-				url: '/images/products/spiral-on-body.jpg',
-				alt: 'Model wearing reverse spiral t-shirt in forest green, magenta, and black',
-				type: 'lifestyle'
-			}
-		],
+		mediaItemIds: [],
+		heroImageIndex: 0,
 		featured: false,
-		tags: ['spiral', 'reverse dye', 'dark', 'lifestyle', 'on body']
+		createdAt: now,
+		updatedAt: now
 	}
 ];
 

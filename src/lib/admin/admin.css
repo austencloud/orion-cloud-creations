@@ -1,0 +1,95 @@
+@import 'tailwindcss';
+@import '@austencloud/media-manager/css/media-manager-tokens.css';
+@import '@austencloud/sidebar/css/sidebar-tokens.css';
+
+@theme {
+	--font-sans: 'Inter', system-ui, sans-serif;
+
+	--color-surface: #1a1a2e;
+	--color-surface-raised: #232340;
+	--color-surface-overlay: #2a2a4a;
+	--color-surface-hover: #303055;
+	--color-border: #3a3a5c;
+	--color-border-subtle: #2e2e4e;
+	--color-text: #e8e8f0;
+	--color-text-muted: #9090b0;
+	--color-text-dim: #606080;
+	--color-accent: #7c5cbf;
+	--color-accent-hover: #9070d0;
+	--color-danger: #e04050;
+	--color-danger-hover: #f05060;
+	--color-success: #40b080;
+	--color-warning: #e0a030;
+
+	--color-tag-flame: #e06030;
+	--color-tag-gold: #d0a020;
+	--color-tag-royal: #5050d0;
+	--color-tag-cyan: #20b0c0;
+	--color-tag-green: #30a050;
+	--color-tag-red: #d03040;
+	--color-tag-purple: #9040c0;
+	--color-tag-navy: #304080;
+	--color-tag-teal: #208070;
+	--color-tag-pink: #d060a0;
+	--color-tag-lime: #80c030;
+	--color-tag-gray: #707080;
+}
+
+.admin-theme {
+	font-family: var(--font-sans);
+	background-color: var(--color-surface);
+	color: var(--color-text);
+
+	--color-status-pending: var(--color-warning);
+	--color-status-paid: var(--color-accent);
+	--color-status-shipped: var(--color-tag-cyan);
+	--color-status-delivered: var(--color-success);
+	--color-status-refunded: var(--color-danger);
+	--color-status-cancelled: var(--color-text-dim);
+
+	--color-table-header: var(--color-surface-raised);
+	--color-table-row-hover: var(--color-surface-hover);
+	--color-table-border: var(--color-border-subtle);
+
+	--color-card-bg: var(--color-surface-raised);
+	--color-card-border: var(--color-border);
+
+	--color-input-bg: var(--color-surface);
+	--color-input-border: var(--color-border);
+	--color-input-focus: var(--color-accent);
+	--color-input-error: var(--color-danger);
+
+	--sidebar-bg: var(--color-surface-raised);
+	--sidebar-border: var(--color-border);
+	--sidebar-text: var(--color-text);
+	--sidebar-text-dim: var(--color-text-muted);
+	--sidebar-hover-bg: var(--color-surface-hover);
+	--sidebar-active-bg: var(--color-surface-overlay);
+}
+
+.admin-theme ::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+.admin-theme ::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.admin-theme ::-webkit-scrollbar-thumb {
+	background: var(--color-border);
+	border-radius: 4px;
+}
+
+.admin-theme ::-webkit-scrollbar-thumb:hover {
+	background: var(--color-text-dim);
+}
+
+.admin-theme ::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+.admin-theme * {
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-border) transparent;
+}

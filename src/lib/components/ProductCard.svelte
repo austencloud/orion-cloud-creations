@@ -21,7 +21,7 @@
 			<img
 				src={heroImage.thumbnailUrl}
 				alt={product.title}
-				class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+				class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
 				loading="lazy"
 			/>
 		{:else}
@@ -34,12 +34,7 @@
 				Sold
 			</div>
 		{/if}
-		{#if product.isOneOfAKind && product.availability === 'available'}
-			<div class="absolute top-3 right-3 bg-accent-purple/90 text-white text-xs font-medium px-3 py-1 uppercase tracking-wider">
-				One of a Kind
-			</div>
-		{/if}
-	</div>
+		</div>
 
 	<div class="mt-4 px-1">
 		<h3 class="text-sm font-medium text-charcoal group-hover:text-accent-purple transition-colors">
