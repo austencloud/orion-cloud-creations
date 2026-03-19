@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ProductCard from '$lib/components/ProductCard.svelte';
-	import { getAvailableProducts, products } from '$lib/data/products';
-	import type { GarmentType, Technique } from '$lib/types/product';
+
+	let { data } = $props();
 
 	let activeFilter = $state<string>('all');
 	let activeTechnique = $state<string>('all');
@@ -25,13 +25,11 @@
 		{ value: 'crumple', label: 'Crumple' }
 	];
 
-	const availableProducts = getAvailableProducts();
-
 	let filteredProducts = $derived(
-		availableProducts.filter((p) => {
+		data.products.filter((p) => {
 			const matchesType = activeFilter === 'all' || p.garmentType === activeFilter;
 			const matchesTechnique =
-				activeTechnique === 'all' || p.techniques.includes(activeTechnique as Technique);
+				activeTechnique === 'all' || p.techniques.includes(activeTechnique);
 			return matchesType && matchesTechnique;
 		})
 	);
@@ -50,7 +48,7 @@
 	<div class="mb-12">
 		<h1 class="text-3xl lg:text-4xl font-light text-charcoal">Shop</h1>
 		<p class="mt-3 text-muted text-sm">
-			{availableProducts.length} pieces available. Each one handmade, one of a kind.
+			{data.products.length} pieces available. Each one handmade, one of a kind.
 		</p>
 	</div>
 
