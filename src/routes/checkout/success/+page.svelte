@@ -14,10 +14,54 @@
 </div>
 
 <style>
-	.success-page { display: flex; align-items: center; justify-content: center; min-height: 60vh; padding: 24px; }
-	.success-card { text-align: center; max-width: 400px; }
-	.success-icon { width: 64px; height: 64px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; background: #40b080; color: white; border-radius: 50%; }
-	h1 { font-size: 24px; margin: 0 0 8px; }
-	p { color: #666; margin: 0 0 24px; }
-	.continue-btn { display: inline-block; padding: 12px 24px; background: #333; color: white; text-decoration: none; border-radius: 8px; }
+	.success-page {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 60vh;
+		padding: var(--spacing-md);
+	}
+
+	.success-card {
+		text-align: center;
+		max-width: 400px;
+	}
+
+	.success-icon {
+		width: 64px;
+		height: 64px;
+		margin: 0 auto 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 2rem;
+		background: var(--occ-teal);
+		color: white;
+		border-radius: 50%;
+	}
+
+	h1 {
+		font-size: 1.5rem;
+		font-weight: 300;
+		color: var(--occ-charcoal);
+		margin: 0 0 0.5rem;
+	}
+
+	p {
+		color: var(--occ-muted);
+		margin: 0 0 1.5rem;
+	}
+
+	.continue-btn {
+		display: inline-block;
+		padding: 0.75rem 1.5rem;
+		background: var(--occ-charcoal);
+		color: white;
+		border-radius: var(--radius-2026-sm, 8px);
+		transition: background var(--duration-normal) var(--ease-out);
+	}
+
+	.continue-btn:hover {
+		background: rgba(26, 26, 26, 0.9);
+	}
 </style>
