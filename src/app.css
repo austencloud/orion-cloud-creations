@@ -1,47 +1,77 @@
-@import "tailwindcss";
+/* ── Shared Foundation ── */
+@import '@austencloud/theme/css/index.css';
+@import '@austencloud/backgrounds/css/index.css';
 
-@theme {
-  --color-cream: #faf9f6;
-  --color-warm-white: #f5f3ef;
-  --color-charcoal: #1a1a1a;
-  --color-muted: #6b6b6b;
-  --color-light-muted: #9a9a9a;
-  --color-border: #e8e5e0;
-  --color-border-light: #f0ede8;
+/* ── OCC Brand Tokens ── */
+:root {
+  /* Colors */
+  --occ-cream: #faf9f6;
+  --occ-warm-white: #f5f3ef;
+  --occ-charcoal: #1a1a1a;
+  --occ-muted: #6b6b6b;
+  --occ-light-muted: #9a9a9a;
+  --occ-border: #e5e2db;
+  --occ-border-light: #f0ede8;
 
-  --color-accent-purple: #5b3a8c;
-  --color-accent-teal: #2a9d8f;
-  --color-accent-gold: #d4a843;
+  /* Accent Palette */
+  --occ-purple: #5b3a8c;
+  --occ-purple-hover: #4a2f73;
+  --occ-teal: #2a9d8f;
+  --occ-gold: #d4a843;
 
-  --font-display: "Georgia", "Times New Roman", serif;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  /* Theme Mappings (shared package convention) */
+  --theme-panel-bg: rgba(255, 255, 255, 0.95);
+  --theme-panel-elevated-bg: rgba(255, 255, 255, 1);
+  --theme-card-bg: #ffffff;
+  --theme-card-hover-bg: var(--occ-warm-white);
+  --theme-stroke: var(--occ-border);
+  --theme-text: var(--occ-charcoal);
+  --theme-text-dim: var(--occ-muted);
+  --theme-accent: var(--occ-purple);
+
+  /* Typography */
+  --occ-font-display: "Georgia", "Times New Roman", serif;
+  --occ-font-body: "Inter", system-ui, sans-serif;
 }
 
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 300 700;
-  font-display: swap;
-  src: url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
-  font-family: var(--font-body);
-  color: var(--color-charcoal);
-  background-color: var(--color-cream);
+  font-family: var(--occ-font-body);
+  color: var(--occ-charcoal);
+  background: var(--occ-cream);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
+/* ── Interactive Elements ── */
+button, a, [role="button"] { cursor: pointer; }
+button { font-family: inherit; border: none; background: none; }
+
+/* ── Focus ── */
+:focus-visible {
+  outline: 2px solid var(--occ-purple);
+  outline-offset: 2px;
+}
+
+/* ── Images ── */
+img { display: block; max-width: 100%; }
+
+/* ── Links ── */
+a { color: inherit; text-decoration: none; }
+
+/* ── Selection ── */
 ::selection {
-  background-color: var(--color-accent-purple);
+  background-color: var(--occ-purple);
   color: white;
 }
 
-img {
-  image-rendering: auto;
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
