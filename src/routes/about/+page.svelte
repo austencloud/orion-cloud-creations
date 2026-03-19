@@ -3,21 +3,14 @@
 	<meta name="description" content="Meet Austen Cloud, the artist behind Orion Cloud Creations. Chicago-based circus artist and professional dyer." />
 </svelte:head>
 
-<div class="mx-auto max-w-7xl px-6 lg:px-8 py-12 lg:py-16">
-	<!-- Header -->
-	<div class="max-w-2xl mb-16">
-		<p class="text-xs font-medium uppercase tracking-[0.2em] text-accent-purple mb-4">
-			About the Artist
-		</p>
-		<h1 class="text-3xl lg:text-4xl font-light text-charcoal leading-snug">
-			Circus artist. Fire dancer. Dyer.
-		</h1>
+<div class="page">
+	<div class="page-header">
+		<p class="label">About the Artist</p>
+		<h1 class="page-title">Circus artist. Fire dancer. Dyer.</h1>
 	</div>
 
-	<!-- Content Grid -->
-	<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-		<!-- Story -->
-		<div class="space-y-6 text-muted leading-relaxed">
+	<div class="content-grid">
+		<div class="story">
 			<p>
 				I'm Austen Cloud, based in Chicago. I started dyeing in 2017 because I wanted clothes that matched what I saw in my head while spinning fire. Nothing on the rack came close, so I made my own.
 			</p>
@@ -34,75 +27,193 @@
 				I'm also a circus performer and choreographer with my company Cirque Aflame. Fire dancing, partner acrobatics, aerial work. The overlap between circus and dye work isn't obvious, but it's real. Both require precision, patience, and comfort with things you can't fully control.
 			</p>
 
-			<div class="pt-6 border-t border-border-light">
-				<h3 class="text-charcoal font-medium text-sm uppercase tracking-wider mb-4">
-					What Makes This Different
-				</h3>
-				<ul class="space-y-3 text-sm">
-					<li class="flex gap-3">
-						<span class="text-accent-purple mt-0.5">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+			<div class="differentiators">
+				<h3 class="diff-heading">What Makes This Different</h3>
+				<ul class="diff-list">
+					<li>
+						<span class="check-icon">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
 								<path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
 							</svg>
 						</span>
-						<span><strong class="text-charcoal">Procion MX dyes</strong> form a permanent molecular bond with cotton. No fading, no bleeding.</span>
+						<span><strong>Procion MX dyes</strong> form a permanent molecular bond with cotton. No fading, no bleeding.</span>
 					</li>
-					<li class="flex gap-3">
-						<span class="text-accent-purple mt-0.5">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+					<li>
+						<span class="check-icon">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
 								<path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
 							</svg>
 						</span>
-						<span><strong class="text-charcoal">100% cotton only.</strong> Natural fiber takes dye completely. The color goes all the way through.</span>
+						<span><strong>100% cotton only.</strong> Natural fiber takes dye completely. The color goes all the way through.</span>
 					</li>
-					<li class="flex gap-3">
-						<span class="text-accent-purple mt-0.5">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+					<li>
+						<span class="check-icon">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
 								<path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
 							</svg>
 						</span>
-						<span><strong class="text-charcoal">One person, start to finish.</strong> Folding, binding, dyeing, rinsing, washing, drying. All me.</span>
+						<span><strong>One person, start to finish.</strong> Folding, binding, dyeing, rinsing, washing, drying. All me.</span>
 					</li>
-					<li class="flex gap-3">
-						<span class="text-accent-purple mt-0.5">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+					<li>
+						<span class="check-icon">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
 								<path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
 							</svg>
 						</span>
-						<span><strong class="text-charcoal">Ice dye technique.</strong> Dye powder applied over ice. The melt creates patterns no human hand could replicate.</span>
+						<span><strong>Ice dye technique.</strong> Dye powder applied over ice. The melt creates patterns no human hand could replicate.</span>
 					</li>
 				</ul>
 			</div>
 		</div>
 
-		<!-- Images -->
-		<div class="space-y-6">
+		<div class="images">
 			<img
 				src="/images/process/procion-dyes.jpg"
 				alt="Collection of labeled Procion MX fiber reactive dye powders in containers"
-				class="w-full rounded-sm object-cover aspect-[4/3]"
+				class="img landscape"
 				loading="lazy"
 			/>
-			<div class="grid grid-cols-2 gap-4">
+			<div class="image-pair">
 				<img
 					src="/images/process/pre-dye-prep.jpg"
 					alt="Cotton shirts tied, bound, and prepared for ice dye application"
-					class="w-full rounded-sm object-cover aspect-square"
+					class="img square"
 					loading="lazy"
 				/>
 				<img
 					src="/images/process/dye-rack.jpg"
 					alt="Freshly dyed garments on a wire rack with vibrant blue and green dyes"
-					class="w-full rounded-sm object-cover aspect-square"
+					class="img square"
 					loading="lazy"
 				/>
 			</div>
 			<img
 				src="/images/products/sunset-ice-crackle.jpg"
 				alt="Finished sunset gradient ice crackle t-shirt showing the final result"
-				class="w-full rounded-sm object-cover aspect-[4/3]"
+				class="img landscape"
 				loading="lazy"
 			/>
 		</div>
 	</div>
 </div>
+
+<style>
+	.page {
+		max-width: 80rem;
+		margin: 0 auto;
+		padding: 3rem var(--spacing-md);
+	}
+
+	.page-header {
+		max-width: 42rem;
+		margin-bottom: 4rem;
+	}
+
+	.label {
+		font-size: var(--font-size-compact);
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		color: var(--occ-purple);
+		margin-bottom: 1rem;
+	}
+
+	.page-title {
+		font-size: var(--font-size-3xl);
+		font-weight: 300;
+		color: var(--occ-charcoal);
+		line-height: 1.375;
+	}
+
+	.content-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 4rem;
+	}
+
+	.story {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		color: var(--occ-muted);
+		line-height: 1.625;
+	}
+
+	.differentiators {
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--occ-border-light);
+	}
+
+	.diff-heading {
+		color: var(--occ-charcoal);
+		font-weight: 500;
+		font-size: var(--font-size-sm);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		margin-bottom: 1rem;
+	}
+
+	.diff-list {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		font-size: var(--font-size-sm);
+	}
+
+	.diff-list li {
+		display: flex;
+		gap: 0.75rem;
+	}
+
+	.check-icon {
+		color: var(--occ-purple);
+		margin-top: 0.125rem;
+		flex-shrink: 0;
+	}
+
+	.check-icon svg {
+		width: 1rem;
+		height: 1rem;
+	}
+
+	.diff-list strong {
+		color: var(--occ-charcoal);
+	}
+
+	.images {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.image-pair {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+
+	.img {
+		width: 100%;
+		border-radius: 2px;
+		object-fit: cover;
+	}
+
+	.img.landscape { aspect-ratio: 4/3; }
+	.img.square { aspect-ratio: 1; }
+
+	@media (min-width: 1024px) {
+		.page {
+			padding: 4rem var(--spacing-lg);
+		}
+
+		.page-title {
+			font-size: 2.25rem;
+		}
+
+		.content-grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 6rem;
+		}
+	}
+</style>
