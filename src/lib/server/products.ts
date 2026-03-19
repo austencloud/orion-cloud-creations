@@ -50,9 +50,12 @@ export async function resolveProductImages(
 	for (const snap of snaps) {
 		if (!snap.exists) continue;
 		const d = snap.data()!;
+		// Use thumbnailUrl as fallback for originalUrl since originals may not be uploaded to R2
+		const originalUrl = (d.fullUrl ?? d.originalUrl) as string | undefined;
+		const thumbnailUrl = d.thumbnailUrl as string;
 		images.push({
-			thumbnailUrl: d.thumbnailUrl as string,
-			originalUrl: d.originalUrl as string,
+			thumbnailUrl,
+			originalUrl: originalUrl || thumbnailUrl,
 		});
 	}
 

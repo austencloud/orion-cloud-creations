@@ -52,7 +52,7 @@
 			<div class="aspect-square overflow-hidden bg-warm-white rounded-sm">
 				{#if mainImage}
 					<img
-						src={mainImage.originalUrl}
+						src={mainImage.thumbnailUrl}
 						alt={product.title}
 						class="w-full h-full object-cover"
 					/>

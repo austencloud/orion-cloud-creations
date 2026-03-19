@@ -3,6 +3,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { readFileSync } from 'fs';
 
 function getServiceAccount(): ServiceAccount | null {
+	// Mode 1: inline JSON string (for deployment)
 	const inlineJson = process.env.FIREBASE_SERVICE_ACCOUNT;
 	if (inlineJson) {
 		try {
@@ -13,6 +14,8 @@ function getServiceAccount(): ServiceAccount | null {
 		}
 	}
 
+	// Mode 2: file path (for local dev)
+	// Try multiple sources since Vite doesn't always populate process.env for non-VITE_ vars
 	const credPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 	if (credPath) {
 		try {
@@ -21,6 +24,13 @@ function getServiceAccount(): ServiceAccount | null {
 			console.error('Failed to read service account file:', e);
 			return null;
 		}
+	}
+
+	// Mode 3: hardcoded fallback path for local dev
+	try {
+		return JSON.parse(readFileSync('./firebase-service-account.json', 'utf-8')) as ServiceAccount;
+	} catch {
+		// File doesn't exist, that's fine
 	}
 
 	return null;
