@@ -43,25 +43,20 @@
 	/>
 </svelte:head>
 
-<div class="mx-auto max-w-7xl px-6 lg:px-8 py-12 lg:py-16">
-	<!-- Header -->
-	<div class="mb-12">
-		<h1 class="text-3xl lg:text-4xl font-light text-charcoal">Shop</h1>
-		<p class="mt-3 text-muted text-sm">
+<div class="page">
+	<div class="page-header">
+		<h1 class="page-title">Shop</h1>
+		<p class="page-subtitle">
 			{data.products.length} pieces available. Each one handmade, one of a kind.
 		</p>
 	</div>
 
-	<!-- Filters -->
-	<div class="flex flex-col sm:flex-row gap-6 mb-10 pb-8 border-b border-border-light">
-		<!-- Garment Type -->
-		<div class="flex flex-wrap gap-2">
+	<div class="filters">
+		<div class="filter-group">
 			{#each garmentTypes as type}
 				<button
-					class="px-4 py-2 text-xs font-medium uppercase tracking-wider transition-colors
-						{activeFilter === type.value
-							? 'bg-charcoal text-white'
-							: 'bg-transparent text-muted hover:text-charcoal border border-border'}"
+					class="filter-btn"
+					class:active={activeFilter === type.value}
 					onclick={() => (activeFilter = type.value)}
 				>
 					{type.label}
@@ -69,14 +64,11 @@
 			{/each}
 		</div>
 
-		<!-- Technique -->
-		<div class="flex flex-wrap gap-2">
+		<div class="filter-group">
 			{#each techniqueFilters as tech}
 				<button
-					class="px-4 py-2 text-xs font-medium uppercase tracking-wider transition-colors
-						{activeTechnique === tech.value
-							? 'bg-accent-purple text-white'
-							: 'bg-transparent text-muted hover:text-charcoal border border-border'}"
+					class="filter-btn technique"
+					class:active={activeTechnique === tech.value}
 					onclick={() => (activeTechnique = tech.value)}
 				>
 					{tech.label}
@@ -85,18 +77,17 @@
 		</div>
 	</div>
 
-	<!-- Product Grid -->
 	{#if filteredProducts.length > 0}
-		<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
+		<div class="product-grid">
 			{#each filteredProducts as product}
 				<ProductCard {product} />
 			{/each}
 		</div>
 	{:else}
-		<div class="text-center py-20">
-			<p class="text-muted text-sm">No pieces match those filters right now.</p>
+		<div class="empty">
+			<p>No pieces match those filters right now.</p>
 			<button
-				class="mt-4 text-sm text-accent-purple hover:text-charcoal transition-colors"
+				class="clear-btn"
 				onclick={() => {
 					activeFilter = 'all';
 					activeTechnique = 'all';
@@ -107,3 +98,124 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	.page {
+		max-width: 80rem;
+		margin: 0 auto;
+		padding: 3rem var(--spacing-md);
+	}
+
+	.page-header {
+		margin-bottom: 3rem;
+	}
+
+	.page-title {
+		font-size: var(--font-size-3xl);
+		font-weight: 300;
+		color: var(--occ-charcoal);
+	}
+
+	.page-subtitle {
+		margin-top: 0.75rem;
+		color: var(--occ-muted);
+		font-size: var(--font-size-sm);
+	}
+
+	.filters {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		margin-bottom: 2.5rem;
+		padding-bottom: 2rem;
+		border-bottom: 1px solid var(--occ-border-light);
+	}
+
+	.filter-group {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.filter-btn {
+		padding: 0.5rem 1rem;
+		font-size: var(--font-size-compact);
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--occ-muted);
+		border: 1px solid var(--occ-border);
+		background: transparent;
+		transition: all var(--duration-normal) var(--ease-out);
+	}
+
+	.filter-btn:hover {
+		color: var(--occ-charcoal);
+	}
+
+	.filter-btn.active {
+		background: var(--occ-charcoal);
+		border-color: var(--occ-charcoal);
+		color: white;
+	}
+
+	.filter-btn.technique.active {
+		background: var(--occ-purple);
+		border-color: var(--occ-purple);
+		color: white;
+	}
+
+	.product-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem;
+	}
+
+	.empty {
+		text-align: center;
+		padding: 5rem 0;
+	}
+
+	.empty p {
+		color: var(--occ-muted);
+		font-size: var(--font-size-sm);
+	}
+
+	.clear-btn {
+		margin-top: 1rem;
+		font-size: var(--font-size-sm);
+		color: var(--occ-purple);
+		transition: color var(--duration-normal) var(--ease-out);
+	}
+
+	.clear-btn:hover {
+		color: var(--occ-charcoal);
+	}
+
+	@media (min-width: 640px) {
+		.filters {
+			flex-direction: row;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.product-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.page {
+			padding: 4rem var(--spacing-lg);
+		}
+
+		.page-title {
+			font-size: 2.25rem;
+		}
+
+		.product-grid {
+			grid-template-columns: repeat(4, 1fr);
+			gap: 2rem;
+		}
+	}
+</style>
