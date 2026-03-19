@@ -12,41 +12,144 @@
 	const heroImage = product.images[0];
 </script>
 
-<a
-	href="/product/{product.slug}"
-	class="group block no-underline"
->
-	<div class="relative overflow-hidden bg-warm-white rounded-sm aspect-square">
+<a href="/product/{product.slug}" class="card">
+	<div class="image-wrap">
 		{#if heroImage}
 			<img
 				src={heroImage.thumbnailUrl}
 				alt={product.title}
-				class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+				class="image"
 				loading="lazy"
 			/>
 		{:else}
-			<div class="w-full h-full bg-warm-white flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
-				<span class="text-xs text-muted opacity-40">{product.title}</span>
+			<div class="placeholder">
+				<span>{product.title}</span>
 			</div>
 		{/if}
 		{#if product.availability === 'sold'}
-			<div class="absolute top-3 left-3 bg-charcoal/80 text-white text-xs font-medium px-3 py-1 uppercase tracking-wider">
-				Sold
-			</div>
+			<div class="badge badge-sold">Sold</div>
 		{/if}
-		</div>
+		{#if product.isOneOfAKind && product.availability === 'available'}
+			<div class="badge badge-unique">One of a Kind</div>
+		{/if}
+	</div>
 
-	<div class="mt-4 px-1">
-		<h3 class="text-sm font-medium text-charcoal group-hover:text-accent-purple transition-colors">
-			{product.title}
-		</h3>
-		<div class="flex items-center justify-between mt-1">
+	<div class="info">
+		<h3 class="title">{product.title}</h3>
+		<div class="meta">
 			{#if showPrice && product.availability === 'available'}
-				<p class="text-sm text-muted font-medium">{formatPrice(product.price)}</p>
+				<p class="price">{formatPrice(product.price)}</p>
 			{:else if product.availability === 'sold'}
-				<p class="text-sm text-light-muted italic">Sold</p>
+				<p class="sold-label">Sold</p>
 			{/if}
-			<p class="text-xs text-light-muted capitalize">{product.garmentType.replace('_', ' ')}</p>
+			<p class="type">{product.garmentType.replace('_', ' ')}</p>
 		</div>
 	</div>
 </a>
+
+<style>
+	.card {
+		display: block;
+	}
+
+	.image-wrap {
+		position: relative;
+		overflow: hidden;
+		background: var(--occ-warm-white);
+		border-radius: 2px;
+		aspect-ratio: 1;
+	}
+
+	.image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 500ms var(--ease-out);
+	}
+
+	.card:hover .image {
+		transform: scale(1.05);
+	}
+
+	.placeholder {
+		width: 100%;
+		height: 100%;
+		background: var(--occ-warm-white);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: transform 500ms var(--ease-out);
+	}
+
+	.placeholder span {
+		font-size: var(--font-size-compact);
+		color: var(--occ-muted);
+		opacity: 0.4;
+	}
+
+	.card:hover .placeholder {
+		transform: scale(1.05);
+	}
+
+	.badge {
+		position: absolute;
+		top: 0.75rem;
+		font-size: var(--font-size-compact);
+		font-weight: 500;
+		padding: 0.25rem 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: white;
+	}
+
+	.badge-sold {
+		left: 0.75rem;
+		background: rgba(26, 26, 26, 0.8);
+	}
+
+	.badge-unique {
+		right: 0.75rem;
+		background: rgba(91, 58, 140, 0.9);
+	}
+
+	.info {
+		margin-top: 1rem;
+		padding: 0 0.25rem;
+	}
+
+	.title {
+		font-size: var(--font-size-sm);
+		font-weight: 500;
+		color: var(--occ-charcoal);
+		transition: color var(--duration-normal) var(--ease-out);
+	}
+
+	.card:hover .title {
+		color: var(--occ-purple);
+	}
+
+	.meta {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: 0.25rem;
+	}
+
+	.price {
+		font-size: var(--font-size-sm);
+		color: var(--occ-muted);
+		font-weight: 500;
+	}
+
+	.sold-label {
+		font-size: var(--font-size-sm);
+		color: var(--occ-light-muted);
+		font-style: italic;
+	}
+
+	.type {
+		font-size: var(--font-size-compact);
+		color: var(--occ-light-muted);
+		text-transform: capitalize;
+	}
+</style>
