@@ -1,8 +1,7 @@
 <script lang="ts">
 	import ProductCard from '$lib/components/ProductCard.svelte';
-	import { getAllProducts } from '$lib/data/products';
 
-	const allProducts = getAllProducts();
+	let { data } = $props();
 </script>
 
 <svelte:head>
@@ -18,9 +17,15 @@
 		</p>
 	</div>
 
-	<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-		{#each allProducts as product}
-			<ProductCard {product} showPrice={false} />
-		{/each}
-	</div>
+	{#if data.products.length > 0}
+		<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
+			{#each data.products as product}
+				<ProductCard {product} showPrice={false} />
+			{/each}
+		</div>
+	{:else}
+		<div class="text-center py-20">
+			<p class="text-muted text-sm">No pieces in the gallery yet.</p>
+		</div>
+	{/if}
 </div>
