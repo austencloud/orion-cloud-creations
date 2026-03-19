@@ -48,9 +48,39 @@ Shared module used by all `+page.server.ts` loaders. Uses `firebase-admin` SDK.
 - `getProductBySlug(slug: string)` — single product lookup by slug field
 - `resolveProductImages(mediaItemIds: string[], heroImageIndex: number)` — batch-fetches `mediaItems` docs, returns `{ thumbnailUrl, originalUrl }[]` with hero image first
 
-**Serialization:** Firestore `Timestamp` fields converted to ISO strings for SvelteKit serialization. Returns a plain object, not the `Product` type (which has `Date` fields).
+**Serialization:** Firestore `Timestamp` fields converted to ISO strings for SvelteKit serialization. Returns a `StorefrontProduct` interface (new type in `src/lib/types/product.ts`):
 
-**Image resolution strategy:** For list pages (shop, homepage, gallery), only resolve the hero image to minimize Firestore reads. For the product detail page, resolve all images.
+```ts
+interface ProductImage {
+  thumbnailUrl: string;
+  originalUrl: string;
+}
+
+interface StorefrontProduct {
+  id: string;           // Firestore document ID — used by cart and checkout
+  slug: string;
+  title: string;
+  description: string;
+  garmentType: GarmentType;
+  techniques: string[];
+  colorway: string[];
+  colorFamily: ColorFamily;
+  sizes: Record<string, SizeVariant>;
+  material: string;
+  price: number;
+  compareAtPrice?: number;
+  availability: 'available' | 'sold' | 'draft' | 'archived';
+  isOneOfAKind: boolean;
+  featured: boolean;
+  images: ProductImage[];   // resolved from mediaItemIds, hero image first
+  createdAt: string;        // ISO string, not Date
+  updatedAt: string;
+}
+```
+
+**Image resolution strategy:** For list pages (shop, homepage, gallery), only resolve the hero image to minimize Firestore reads. For the product detail page, resolve all images. If a `mediaItemId` references a deleted media item, skip it silently (filter out missing docs).
+
+**Null handling:** If `adminDb` is null (credentials not configured), all query functions return empty arrays / null. Loaders pass empty data to pages, which render their existing empty states. The dev experience degrades gracefully — the site is browsable but shows no products.
 
 ### 2. Storefront Route Loaders
 
@@ -89,6 +119,8 @@ The `/product/[slug]` page receives all resolved images. Display:
 
 In the admin product create (`/admin/products/new`) and edit (`/admin/products/[id]`) pages:
 - After successful Firestore save, call `/api/products/sync` with the product ID
+- Flow: (1) save to Firestore → (2) call sync → (3) redirect to product list
+- If sync fails: show a warning toast but still redirect (the product is saved, just not purchasable yet until sync succeeds)
 - Show sync status (syncing/synced/failed) in the UI
 - Products without `stripePriceId` can't be purchased — the checkout API already validates this
 
@@ -99,7 +131,24 @@ In `/api/webhooks/stripe/+server.ts`, after creating the order:
 - Call `adminDb` to decrement `sizes.{size}.stock` by the quantity
 - If stock hits 0 across all sizes, update `availability` to `'sold'`
 
-**Size mapping:** The current webhook hardcodes `size: 'M'` for order items. This needs fixing — the cart should pass the selected size through to Stripe as metadata on the line item, and the webhook should read it back.
+**Size mapping via session metadata:** The current webhook hardcodes `size: 'M'`. Stripe `line_items` do not support per-item metadata. Instead, encode size info on the checkout session's `metadata` field:
+
+```ts
+// In /api/checkout when creating the session:
+metadata: {
+  'item_0_productId': 'abc123',
+  'item_0_size': 'L',
+  'item_0_quantity': '1',
+  'item_1_productId': 'def456',
+  'item_1_size': 'M',
+  'item_1_quantity': '2',
+  'itemCount': '2'
+}
+```
+
+The webhook reads `session.metadata` to get the correct size for each item when decrementing stock and creating order items. Stock decrement uses `FieldValue.increment(-quantity)` (matching the pattern in the client-side `productService.decrementStock`).
+
+**Stock validation at checkout:** Before creating the Stripe session, validate that each requested size has sufficient stock. Return a 400 error with the specific product/size if stock is insufficient. This prevents overselling from stale cart data.
 
 ### 7. Firebase Admin Configuration
 
@@ -129,6 +178,7 @@ This is a small change to the existing `initAdmin()` function.
 
 | File | Action | Description |
 |------|--------|-------------|
+| `src/lib/types/product.ts` | Edit | Add `StorefrontProduct` and `ProductImage` interfaces |
 | `src/lib/server/products.ts` | Create | Server-side product queries + image resolution |
 | `src/lib/server/firebase-admin.ts` | Edit | Support inline JSON service account |
 | `src/routes/+page.server.ts` | Create | Load featured products for homepage |
@@ -141,7 +191,7 @@ This is a small change to the existing `initAdmin()` function.
 | `src/routes/product/[slug]/+page.svelte` | Edit | Use loaded data, render real image gallery |
 | `src/lib/components/ProductCard.svelte` | Edit | Accept imageUrl prop, render real image |
 | `src/routes/api/webhooks/stripe/+server.ts` | Edit | Add stock decrement + size from metadata |
-| `src/routes/api/checkout/+server.ts` | Edit | Pass size as Stripe line item metadata |
+| `src/routes/api/checkout/+server.ts` | Edit | Add size via session metadata, add stock validation |
 | `src/routes/admin/products/new/+page.svelte` | Edit | Auto-sync to Stripe after save |
 | `src/routes/admin/products/[id]/+page.svelte` | Edit | Auto-sync to Stripe after save |
 | `src/lib/data/products.ts` | Keep | No longer imported by storefront; kept as reference |
@@ -157,6 +207,27 @@ This is a small change to the existing `initAdmin()` function.
 - Image optimization (WebP, srcset)
 - Caching / ISR
 - Admin product creation from media tags (auto-populate fields from tags) — nice-to-have enhancement, not blocking
+
+---
+
+## Firestore Indexes Required
+
+The following composite indexes must exist in Firestore for the server-side queries:
+
+| Collection | Fields | Order |
+|-----------|--------|-------|
+| `products` | `availability` ASC, `createdAt` DESC | For `getAvailableProducts()` and `getAllDisplayableProducts()` |
+| `products` | `featured` ASC, `availability` ASC | For `getFeaturedProducts()` (no ordering needed — featured products are few) |
+| `products` | `slug` ASC | For `getProductBySlug()` — single field, auto-indexed |
+
+Firestore will prompt to create these indexes on first query failure, or they can be defined in `firestore.indexes.json`.
+
+---
+
+## Known Limitations
+
+- **Technique/colorway filters:** The admin product form currently saves `techniques: []` and `colorway: []`. Shop page filtering by technique will not work until these fields are populated. Garment type filtering works.
+- **No denormalized hero URL:** List pages make an extra Firestore read per product to resolve the hero image. Acceptable at 50 products. If this becomes a bottleneck, denormalize the hero URL onto the product document.
 
 ---
 
