@@ -13,8 +13,8 @@
 	const mainImage = $derived(product.images[selectedImageIndex] ?? product.images[0]);
 
 	function handleAddToCart() {
-		if (!selectedSize || selectedSize === '') return;
-		const size = selectedSize as Size;
+		if (!selectedSize) return;
+		const size = selectedSize;
 		const sizeVariant = product.sizes[size];
 		if (!sizeVariant) return;
 
