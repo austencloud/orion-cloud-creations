@@ -1,8 +1,8 @@
 <script lang="ts">
 	import ProductCard from '$lib/components/ProductCard.svelte';
-	import { getFeaturedProducts, products, formatPrice } from '$lib/data/products';
 
-	const featured = getFeaturedProducts();
+	let { data } = $props();
+	const featured = data.featured;
 
 	const techniques = [
 		{
