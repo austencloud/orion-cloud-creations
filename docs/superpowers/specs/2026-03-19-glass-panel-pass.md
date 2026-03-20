@@ -71,7 +71,7 @@ Not extracted to a global utility class — each component applies it in its sco
 - Border-bottom: `var(--occ-glass-border)` (was `--occ-border-light`)
 - Nav links: `var(--occ-glass-text-dim)`, hover to `var(--occ-glass-text)`
 - Cart icon, menu icon: same glass text colors
-- Mobile menu: glass background, glass border
+- Mobile menu: glass background at higher opacity (`rgba(10, 10, 30, 0.85)`) for readability, glass border
 - Logo: add `filter: invert(1) brightness(2)` to make white (same as footer currently does)
 
 ### Footer
@@ -183,7 +183,7 @@ Not extracted to a global utility class — each component applies it in its sco
 
 ### ProductCard
 
-- Image container: keep neutral background for product photos (`var(--occ-warm-white)` or darken to match glass)
+- Image container: dark neutral background (`rgba(20, 20, 40, 0.4)`) — dark enough to not clash with glass panels, light enough for product photo colors to pop
 - Info section below image: transparent (inherits from parent glass panel)
 - Title: `var(--occ-glass-text)`, hover: `var(--occ-purple)`
 - Price: `var(--occ-glass-text-dim)`
@@ -231,6 +231,7 @@ The homepage is special: multiple glass panels (featured, techniques, about, new
 | File | Description |
 |------|-------------|
 | `src/app.css` | Add glass tokens, change body bg/color |
+| `src/routes/+layout.svelte` | Transparent shell/main backgrounds |
 | `src/lib/components/Header.svelte` | Glass header |
 | `src/lib/components/Footer.svelte` | Glass footer |
 | `src/lib/components/ProductCard.svelte` | Glass text colors |
