@@ -184,13 +184,20 @@
 		max-width: 80rem;
 		margin: 0 auto;
 		padding: 2rem var(--spacing-md);
+		background: var(--occ-glass-bg);
+		backdrop-filter: blur(var(--occ-glass-blur));
+		-webkit-backdrop-filter: blur(var(--occ-glass-blur));
+		border: 1px solid var(--occ-glass-border);
+		border-radius: var(--occ-glass-radius);
+		margin-top: 1rem;
+		margin-bottom: 2rem;
 	}
 
 	/* Breadcrumb */
 	.breadcrumb {
 		margin-bottom: 2rem;
 		font-size: var(--font-size-compact);
-		color: var(--occ-light-muted);
+		color: var(--occ-glass-text-muted);
 	}
 
 	.breadcrumb a {
@@ -198,7 +205,7 @@
 	}
 
 	.breadcrumb a:hover {
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	.sep {
@@ -206,7 +213,7 @@
 	}
 
 	.current {
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	/* Layout */
@@ -226,8 +233,8 @@
 	.main-image {
 		aspect-ratio: 1;
 		overflow: hidden;
-		background: var(--occ-warm-white);
-		border-radius: 2px;
+		background: rgba(20, 20, 40, 0.4);
+		border-radius: var(--occ-glass-radius);
 	}
 
 	.main-image img {
@@ -245,7 +252,7 @@
 	}
 
 	.no-image span {
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		opacity: 0.4;
 		font-size: var(--font-size-sm);
 	}
@@ -268,11 +275,11 @@
 	}
 
 	.thumb.active {
-		border-color: var(--occ-charcoal);
+		border-color: white;
 	}
 
 	.thumb:not(.active):hover {
-		border-color: var(--occ-border);
+		border-color: var(--occ-glass-border-hover);
 	}
 
 	.thumb img {
@@ -298,26 +305,26 @@
 	.title {
 		font-size: 1.5rem;
 		font-weight: 300;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	.price {
 		margin-top: 0.75rem;
 		font-size: 1.25rem;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 		font-weight: 500;
 	}
 
 	.sold-price {
 		margin-top: 0.75rem;
 		font-size: 1.125rem;
-		color: var(--occ-light-muted);
+		color: var(--occ-glass-text-muted);
 		font-style: italic;
 	}
 
 	.description {
 		margin-top: 1.5rem;
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		font-size: var(--font-size-sm);
 		line-height: 1.625;
 	}
@@ -329,7 +336,7 @@
 		flex-direction: column;
 		gap: 1rem;
 		font-size: var(--font-size-sm);
-		border-top: 1px solid var(--occ-border-light);
+		border-top: 1px solid var(--occ-glass-border);
 		padding-top: 1.5rem;
 	}
 
@@ -339,12 +346,12 @@
 	}
 
 	.detail-label {
-		color: var(--occ-light-muted);
+		color: var(--occ-glass-text-muted);
 		width: 6rem;
 	}
 
 	.detail-value {
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	.capitalize {
@@ -359,7 +366,7 @@
 	.size-heading {
 		font-size: var(--font-size-sm);
 		font-weight: 500;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 		margin-bottom: 0.75rem;
 	}
 
@@ -374,24 +381,25 @@
 		height: 2.5rem;
 		font-size: var(--font-size-sm);
 		font-weight: 500;
-		border: 1px solid var(--occ-border);
-		color: var(--occ-muted);
+		border: 1px solid var(--occ-glass-border);
+		color: var(--occ-glass-text-dim);
+		background: var(--occ-glass-bg);
 		transition: all var(--duration-normal) var(--ease-out);
 	}
 
 	.size-btn:hover:not(.oos) {
-		border-color: var(--occ-charcoal);
-		color: var(--occ-charcoal);
+		border-color: var(--occ-glass-border-hover);
+		color: var(--occ-glass-text);
 	}
 
 	.size-btn.active {
-		border-color: var(--occ-charcoal);
-		background: var(--occ-charcoal);
-		color: white;
+		border-color: white;
+		background: white;
+		color: var(--occ-charcoal);
 	}
 
 	.size-btn.oos {
-		color: var(--occ-light-muted);
+		color: var(--occ-glass-text-muted);
 		text-decoration: line-through;
 		opacity: 0.4;
 		cursor: not-allowed;
@@ -402,7 +410,7 @@
 		margin-top: 2rem;
 		width: 100%;
 		padding: 1rem;
-		background: var(--occ-charcoal);
+		background: var(--occ-purple);
 		color: white;
 		font-size: var(--font-size-sm);
 		font-weight: 600;
@@ -412,7 +420,7 @@
 	}
 
 	.add-to-cart:hover:not(:disabled) {
-		background: rgba(26, 26, 26, 0.9);
+		background: var(--occ-purple-hover);
 	}
 
 	.add-to-cart:disabled {
@@ -423,7 +431,7 @@
 	.shipping-note {
 		margin-top: 1rem;
 		font-size: var(--font-size-compact);
-		color: var(--occ-light-muted);
+		color: var(--occ-glass-text-muted);
 		text-align: center;
 	}
 
@@ -431,7 +439,7 @@
 	.trust-grid {
 		margin-top: 2.5rem;
 		padding-top: 1.5rem;
-		border-top: 1px solid var(--occ-border-light);
+		border-top: 1px solid var(--occ-glass-border);
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 1rem;
@@ -439,12 +447,12 @@
 
 	.trust-item {
 		font-size: var(--font-size-compact);
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 	}
 
 	.trust-title {
 		font-weight: 500;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 		margin-bottom: 0.25rem;
 	}
 
@@ -452,13 +460,13 @@
 	.related {
 		margin-top: 5rem;
 		padding-top: 3rem;
-		border-top: 1px solid var(--occ-border-light);
+		border-top: 1px solid var(--occ-glass-border);
 	}
 
 	.related-title {
 		font-size: 1.25rem;
 		font-weight: 300;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 		margin-bottom: 2rem;
 	}
 
