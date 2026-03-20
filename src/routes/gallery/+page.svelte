@@ -35,6 +35,13 @@
 		max-width: 80rem;
 		margin: 0 auto;
 		padding: 3rem var(--spacing-md);
+		background: var(--occ-glass-bg);
+		backdrop-filter: blur(var(--occ-glass-blur));
+		-webkit-backdrop-filter: blur(var(--occ-glass-blur));
+		border: 1px solid var(--occ-glass-border);
+		border-radius: var(--occ-glass-radius);
+		margin-top: 1rem;
+		margin-bottom: 2rem;
 	}
 
 	.page-header {
@@ -44,12 +51,12 @@
 	.page-title {
 		font-size: var(--font-size-3xl);
 		font-weight: 300;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	.page-subtitle {
 		margin-top: 0.75rem;
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		font-size: var(--font-size-sm);
 		max-width: 32rem;
 	}
@@ -66,7 +73,7 @@
 	}
 
 	.empty p {
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		font-size: var(--font-size-sm);
 	}
 
