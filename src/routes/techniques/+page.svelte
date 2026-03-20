@@ -172,6 +172,13 @@
 		max-width: 80rem;
 		margin: 0 auto;
 		padding: 3rem var(--spacing-md);
+		background: var(--occ-glass-bg);
+		backdrop-filter: blur(var(--occ-glass-blur));
+		-webkit-backdrop-filter: blur(var(--occ-glass-blur));
+		border: 1px solid var(--occ-glass-border);
+		border-radius: var(--occ-glass-radius);
+		margin-top: 1rem;
+		margin-bottom: 2rem;
 	}
 
 	.page-header {
@@ -191,27 +198,27 @@
 	.page-title {
 		font-size: var(--font-size-3xl);
 		font-weight: 300;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 		line-height: 1.375;
 	}
 
 	.page-intro {
 		margin-top: 1rem;
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		line-height: 1.625;
 	}
 
 	.heading-lg {
 		font-size: 1.25rem;
 		font-weight: 500;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 		margin-bottom: 1rem;
 	}
 
 	.heading-md {
 		font-size: 1.125rem;
 		font-weight: 500;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 		margin-bottom: 0.75rem;
 	}
 
@@ -223,7 +230,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.75rem;
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		font-size: var(--font-size-sm);
 		line-height: 1.625;
 	}
@@ -255,8 +262,9 @@
 	/* Care */
 	.care-section {
 		margin-top: 6rem;
-		background: var(--occ-warm-white);
-		border-radius: 2px;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid var(--occ-glass-border);
+		border-radius: var(--occ-glass-radius);
 		padding: 2rem;
 	}
 
@@ -269,7 +277,7 @@
 	.care-heading {
 		font-size: var(--font-size-sm);
 		font-weight: 600;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 		margin-bottom: 0.75rem;
@@ -280,7 +288,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		font-size: var(--font-size-sm);
 	}
 
