@@ -38,9 +38,13 @@
 
 <style>
 	.footer {
-		background: var(--occ-charcoal);
-		color: rgba(255, 255, 255, 0.7);
-		margin-top: 8rem;
+		background: var(--occ-glass-bg);
+		backdrop-filter: blur(var(--occ-glass-blur));
+		-webkit-backdrop-filter: blur(var(--occ-glass-blur));
+		border-top: 1px solid var(--occ-glass-border);
+		border-radius: var(--occ-glass-radius) var(--occ-glass-radius) 0 0;
+		color: var(--occ-glass-text-dim);
+		margin-top: 2rem;
 	}
 
 	.footer-inner {
@@ -69,7 +73,7 @@
 	}
 
 	.footer-heading {
-		color: white;
+		color: var(--occ-glass-text);
 		font-size: var(--font-size-sm);
 		font-weight: 600;
 		text-transform: uppercase;
@@ -98,7 +102,7 @@
 
 	.copyright {
 		margin-top: 1rem;
-		color: rgba(255, 255, 255, 0.4);
+		color: var(--occ-glass-text-muted);
 	}
 
 	@media (min-width: 768px) {
