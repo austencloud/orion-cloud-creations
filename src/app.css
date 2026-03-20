@@ -32,6 +32,19 @@
   /* Typography */
   --occ-font-display: "Georgia", "Times New Roman", serif;
   --occ-font-body: "Inter", system-ui, sans-serif;
+
+  /* Glass Panel System */
+  --occ-glass-bg: rgba(10, 10, 30, 0.6);
+  --occ-glass-bg-hover: rgba(10, 10, 30, 0.7);
+  --occ-glass-blur: 16px;
+  --occ-glass-border: rgba(255, 255, 255, 0.08);
+  --occ-glass-border-hover: rgba(255, 255, 255, 0.12);
+  --occ-glass-radius: 12px;
+
+  /* Glass Text Colors */
+  --occ-glass-text: #e8e8f0;
+  --occ-glass-text-dim: rgba(255, 255, 255, 0.6);
+  --occ-glass-text-muted: rgba(255, 255, 255, 0.4);
 }
 
 /* ── Reset ── */
@@ -39,8 +52,8 @@
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--occ-font-body);
-  color: var(--occ-charcoal);
-  background: var(--occ-cream);
+  color: var(--occ-glass-text);
+  background: transparent;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
