@@ -102,6 +102,13 @@
 		max-width: 80rem;
 		margin: 0 auto;
 		padding: 3rem var(--spacing-md);
+		background: var(--occ-glass-bg);
+		backdrop-filter: blur(var(--occ-glass-blur));
+		-webkit-backdrop-filter: blur(var(--occ-glass-blur));
+		border: 1px solid var(--occ-glass-border);
+		border-radius: var(--occ-glass-radius);
+		margin-top: 1rem;
+		margin-bottom: 2rem;
 	}
 
 	.page-header {
@@ -121,7 +128,7 @@
 	.page-title {
 		font-size: var(--font-size-3xl);
 		font-weight: 300;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 		line-height: 1.375;
 	}
 
@@ -135,17 +142,17 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1.5rem;
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		line-height: 1.625;
 	}
 
 	.differentiators {
 		padding-top: 1.5rem;
-		border-top: 1px solid var(--occ-border-light);
+		border-top: 1px solid var(--occ-glass-border);
 	}
 
 	.diff-heading {
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 		font-weight: 500;
 		font-size: var(--font-size-sm);
 		text-transform: uppercase;
@@ -178,7 +185,7 @@
 	}
 
 	.diff-list strong {
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	.images {
