@@ -55,8 +55,8 @@
 	.image-wrap {
 		position: relative;
 		overflow: hidden;
-		background: var(--occ-warm-white);
-		border-radius: 2px;
+		background: rgba(20, 20, 40, 0.4);
+		border-radius: var(--occ-glass-radius);
 		aspect-ratio: 1;
 	}
 
@@ -74,7 +74,7 @@
 	.placeholder {
 		width: 100%;
 		height: 100%;
-		background: var(--occ-warm-white);
+		background: rgba(20, 20, 40, 0.4);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -83,7 +83,7 @@
 
 	.placeholder span {
 		font-size: var(--font-size-compact);
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-muted);
 		opacity: 0.4;
 	}
 
@@ -120,7 +120,7 @@
 	.title {
 		font-size: var(--font-size-sm);
 		font-weight: 500;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 		transition: color var(--duration-normal) var(--ease-out);
 	}
 
@@ -137,19 +137,19 @@
 
 	.price {
 		font-size: var(--font-size-sm);
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		font-weight: 500;
 	}
 
 	.sold-label {
 		font-size: var(--font-size-sm);
-		color: var(--occ-light-muted);
+		color: var(--occ-glass-text-muted);
 		font-style: italic;
 	}
 
 	.type {
 		font-size: var(--font-size-compact);
-		color: var(--occ-light-muted);
+		color: var(--occ-glass-text-muted);
 		text-transform: capitalize;
 	}
 </style>
