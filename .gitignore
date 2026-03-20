@@ -6,3 +6,9 @@ service-account.json
 firebase-service-account.json
 .DS_Store
 *.local
+*.log
+.claude/
+.mcp.json
+.wrangler/
+docs/superpowers/
+occ-admin/
