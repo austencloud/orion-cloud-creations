@@ -29,35 +29,24 @@
 
 <!-- Hero Section -->
 <section class="hero">
-	<div class="hero-bg">
-		<img
-			src="/images/hero/hero-mandala.jpg"
-			alt="Ice dye mandala t-shirt with radiant cyan center"
-			class="hero-img"
-		/>
-		<div class="hero-overlay"></div>
-	</div>
-
 	<div class="hero-content">
-		<div class="hero-text">
-			<p class="hero-label">Handmade in Chicago</p>
-			<h1 class="hero-title">
-				Wearable art,<br />
-				<span class="hero-title-accent">dyed by hand.</span>
-			</h1>
-			<p class="hero-desc">
-				Professional Procion fiber reactive dyes on 100% cotton. Every piece is unique. Every color is permanent.
-			</p>
-			<div class="hero-actions">
-				<a href="/shop" class="btn-primary">Shop Collection</a>
-				<a href="/techniques" class="btn-outline">Learn More</a>
-			</div>
+		<p class="hero-label">Handmade in Chicago</p>
+		<h1 class="hero-title">
+			Wearable art,<br />
+			<span class="hero-title-accent">dyed by hand.</span>
+		</h1>
+		<p class="hero-desc">
+			Professional Procion fiber reactive dyes on 100% cotton. Every piece is unique. Every color is permanent.
+		</p>
+		<div class="hero-actions">
+			<a href="/shop" class="btn-primary">Shop Collection</a>
+			<a href="/techniques" class="btn-outline">Learn More</a>
 		</div>
 	</div>
 </section>
 
 <!-- Featured Products -->
-<section class="section">
+<section class="glass-section">
 	<div class="section-header">
 		<h2 class="section-title">Featured Pieces</h2>
 		<p class="section-subtitle">Each piece is one of a kind. When it's gone, it's gone.</p>
@@ -80,37 +69,35 @@
 </section>
 
 <!-- Technique Highlights -->
-<section class="techniques-band">
-	<div class="techniques-inner">
-		<div class="section-header">
-			<h2 class="section-title">The Techniques</h2>
-			<p class="section-subtitle wide">
-				Not all tie-dye is created equal. These are professional techniques using fiber reactive dyes that bond permanently to the cotton fiber.
-			</p>
-		</div>
+<section class="glass-section">
+	<div class="section-header">
+		<h2 class="section-title">The Techniques</h2>
+		<p class="section-subtitle wide">
+			Not all tie-dye is created equal. These are professional techniques using fiber reactive dyes that bond permanently to the cotton fiber.
+		</p>
+	</div>
 
-		<div class="technique-grid">
-			{#each techniques as technique}
-				<a href="/techniques" class="technique-card">
-					<div class="technique-img-wrap">
-						<img
-							src={technique.image}
-							alt={technique.name}
-							class="technique-img"
-							loading="lazy"
-						/>
-						<div class="technique-gradient"></div>
-						<h3 class="technique-name">{technique.name}</h3>
-					</div>
-					<p class="technique-desc">{technique.description}</p>
-				</a>
-			{/each}
-		</div>
+	<div class="technique-grid">
+		{#each techniques as technique}
+			<a href="/techniques" class="technique-card">
+				<div class="technique-img-wrap">
+					<img
+						src={technique.image}
+						alt={technique.name}
+						class="technique-img"
+						loading="lazy"
+					/>
+					<div class="technique-gradient"></div>
+					<h3 class="technique-name">{technique.name}</h3>
+				</div>
+				<p class="technique-desc">{technique.description}</p>
+			</a>
+		{/each}
 	</div>
 </section>
 
 <!-- About Teaser -->
-<section class="section">
+<section class="glass-section">
 	<div class="about-grid">
 		<div class="about-images">
 			<div class="about-col">
@@ -170,59 +157,32 @@
 </section>
 
 <!-- Newsletter / CTA -->
-<section class="newsletter">
-	<div class="newsletter-inner">
-		<h2 class="newsletter-title">New pieces drop regularly.</h2>
-		<p class="newsletter-subtitle">Follow along to see new work as it comes out of the dye bath.</p>
-		<div class="newsletter-form">
-			<input type="email" placeholder="Your email" class="newsletter-input" />
-			<button class="newsletter-btn">Notify Me</button>
-		</div>
+<section class="glass-section newsletter-section">
+	<h2 class="newsletter-title">New pieces drop regularly.</h2>
+	<p class="newsletter-subtitle">Follow along to see new work as it comes out of the dye bath.</p>
+	<div class="newsletter-form">
+		<input type="email" placeholder="Your email" class="newsletter-input" />
+		<button class="newsletter-btn">Notify Me</button>
 	</div>
 </section>
 
 <style>
 	/* ── Hero ── */
 	.hero {
-		position: relative;
-		height: 85vh;
-		min-height: 600px;
-		overflow: hidden;
-	}
-
-	.hero-bg {
-		position: absolute;
-		inset: 0;
-	}
-
-	.hero-img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
-	.hero-overlay {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(to right, rgba(26, 26, 26, 0.7), rgba(26, 26, 26, 0.4), transparent);
+		min-height: 60vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: 4rem var(--spacing-md);
 	}
 
 	.hero-content {
-		position: relative;
-		height: 100%;
-		max-width: 80rem;
-		margin: 0 auto;
-		padding: 0 var(--spacing-md);
-		display: flex;
-		align-items: center;
-	}
-
-	.hero-text {
-		max-width: 36rem;
+		max-width: 40rem;
 	}
 
 	.hero-label {
-		color: rgba(255, 255, 255, 0.7);
+		color: var(--occ-glass-text-dim);
 		font-size: var(--font-size-sm);
 		font-weight: 500;
 		text-transform: uppercase;
@@ -247,20 +207,26 @@
 		color: rgba(255, 255, 255, 0.8);
 		line-height: 1.625;
 		max-width: 28rem;
+		margin-left: auto;
+		margin-right: auto;
 	}
 
 	.hero-actions {
 		margin-top: 2.5rem;
 		display: flex;
 		gap: 1rem;
+		justify-content: center;
 	}
 
 	.btn-primary {
 		display: inline-flex;
 		align-items: center;
 		padding: 0.75rem 2rem;
-		background: white;
-		color: var(--occ-charcoal);
+		background: var(--occ-glass-bg);
+		color: var(--occ-glass-text);
+		border: 1px solid var(--occ-glass-border-hover);
+		backdrop-filter: blur(var(--occ-glass-blur));
+		-webkit-backdrop-filter: blur(var(--occ-glass-blur));
 		font-size: var(--font-size-sm);
 		font-weight: 600;
 		text-transform: uppercase;
@@ -269,15 +235,15 @@
 	}
 
 	.btn-primary:hover {
-		background: rgba(255, 255, 255, 0.9);
+		background: var(--occ-glass-bg-hover);
 	}
 
 	.btn-outline {
 		display: inline-flex;
 		align-items: center;
 		padding: 0.75rem 2rem;
-		border: 1px solid rgba(255, 255, 255, 0.4);
-		color: white;
+		border: 1px solid var(--occ-glass-border-hover);
+		color: var(--occ-glass-text);
 		font-size: var(--font-size-sm);
 		font-weight: 600;
 		text-transform: uppercase;
@@ -286,7 +252,7 @@
 	}
 
 	.btn-outline:hover {
-		background: rgba(255, 255, 255, 0.1);
+		background: rgba(255, 255, 255, 0.05);
 	}
 
 	@media (min-width: 640px) {
@@ -294,17 +260,29 @@
 	}
 
 	@media (min-width: 1024px) {
-		.hero-content { padding: 0 var(--spacing-lg); }
 		.hero-title { font-size: 3.75rem; }
 	}
 
-	/* ── Shared Section ── */
-	.section {
+	/* ── Glass Section ── */
+	.glass-section {
 		max-width: 80rem;
-		margin: 0 auto;
-		padding: 5rem var(--spacing-md);
+		margin: 2rem auto;
+		padding: 3rem var(--spacing-md);
+		background: var(--occ-glass-bg);
+		backdrop-filter: blur(var(--occ-glass-blur));
+		-webkit-backdrop-filter: blur(var(--occ-glass-blur));
+		border: 1px solid var(--occ-glass-border);
+		border-radius: var(--occ-glass-radius);
 	}
 
+	@media (min-width: 1024px) {
+		.glass-section {
+			padding: 4rem var(--spacing-lg);
+			margin: 2.5rem auto;
+		}
+	}
+
+	/* ── Shared Section ── */
 	.section-header {
 		text-align: center;
 		margin-bottom: 3.5rem;
@@ -313,7 +291,7 @@
 	.section-title {
 		font-size: 1.5rem;
 		font-weight: 300;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	.section-title.snug {
@@ -322,7 +300,7 @@
 
 	.section-subtitle {
 		margin-top: 0.75rem;
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		font-size: var(--font-size-sm);
 		max-width: 28rem;
 		margin-left: auto;
@@ -360,7 +338,7 @@
 	}
 
 	.link-arrow:hover {
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	.link-arrow-icon {
@@ -369,7 +347,6 @@
 	}
 
 	@media (min-width: 1024px) {
-		.section { padding: 7rem var(--spacing-lg); }
 		.section-title { font-size: var(--font-size-3xl); }
 	}
 
@@ -388,17 +365,6 @@
 	}
 
 	/* ── Technique Highlights ── */
-	.techniques-band {
-		background: var(--occ-warm-white);
-		padding: 5rem 0;
-	}
-
-	.techniques-inner {
-		max-width: 80rem;
-		margin: 0 auto;
-		padding: 0 var(--spacing-md);
-	}
-
 	.technique-grid {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -445,7 +411,7 @@
 	.technique-desc {
 		margin-top: 0.75rem;
 		font-size: var(--font-size-sm);
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		line-height: 1.625;
 	}
 
@@ -453,11 +419,6 @@
 		.technique-grid {
 			grid-template-columns: repeat(3, 1fr);
 		}
-	}
-
-	@media (min-width: 1024px) {
-		.techniques-band { padding: 7rem 0; }
-		.techniques-inner { padding: 0 var(--spacing-lg); }
 	}
 
 	/* ── About Teaser ── */
@@ -498,7 +459,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		font-size: var(--font-size-sm);
 		line-height: 1.625;
 	}
@@ -515,27 +476,19 @@
 	}
 
 	/* ── Newsletter ── */
-	.newsletter {
-		background: var(--occ-charcoal);
-		color: white;
-		padding: 5rem 0;
-	}
-
-	.newsletter-inner {
-		max-width: 42rem;
-		margin: 0 auto;
-		padding: 0 var(--spacing-md);
+	.newsletter-section {
 		text-align: center;
 	}
 
 	.newsletter-title {
 		font-size: 1.5rem;
 		font-weight: 300;
+		color: var(--occ-glass-text);
 	}
 
 	.newsletter-subtitle {
 		margin-top: 1rem;
-		color: rgba(255, 255, 255, 0.6);
+		color: var(--occ-glass-text-dim);
 		font-size: var(--font-size-sm);
 	}
 
@@ -570,8 +523,8 @@
 
 	.newsletter-btn {
 		padding: 0.75rem 1.5rem;
-		background: white;
-		color: var(--occ-charcoal);
+		background: var(--occ-purple);
+		color: white;
 		font-size: var(--font-size-sm);
 		font-weight: 600;
 		text-transform: uppercase;
@@ -580,7 +533,7 @@
 	}
 
 	.newsletter-btn:hover {
-		background: rgba(255, 255, 255, 0.9);
+		background: var(--occ-purple-hover);
 	}
 
 	@media (min-width: 640px) {
@@ -590,7 +543,6 @@
 	}
 
 	@media (min-width: 1024px) {
-		.newsletter { padding: 6rem 0; }
 		.newsletter-title { font-size: var(--font-size-3xl); }
 	}
 </style>
