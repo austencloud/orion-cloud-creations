@@ -104,6 +104,13 @@
 		max-width: 80rem;
 		margin: 0 auto;
 		padding: 3rem var(--spacing-md);
+		background: var(--occ-glass-bg);
+		backdrop-filter: blur(var(--occ-glass-blur));
+		-webkit-backdrop-filter: blur(var(--occ-glass-blur));
+		border: 1px solid var(--occ-glass-border);
+		border-radius: var(--occ-glass-radius);
+		margin-top: 1rem;
+		margin-bottom: 2rem;
 	}
 
 	.page-header {
@@ -113,12 +120,12 @@
 	.page-title {
 		font-size: var(--font-size-3xl);
 		font-weight: 300;
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	.page-subtitle {
 		margin-top: 0.75rem;
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		font-size: var(--font-size-sm);
 	}
 
@@ -128,7 +135,7 @@
 		gap: 1.5rem;
 		margin-bottom: 2.5rem;
 		padding-bottom: 2rem;
-		border-bottom: 1px solid var(--occ-border-light);
+		border-bottom: 1px solid var(--occ-glass-border);
 	}
 
 	.filter-group {
@@ -143,14 +150,15 @@
 		font-weight: 500;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-		color: var(--occ-muted);
-		border: 1px solid var(--occ-border);
-		background: transparent;
+		color: var(--occ-glass-text-dim);
+		border: 1px solid var(--occ-glass-border);
+		background: var(--occ-glass-bg);
 		transition: all var(--duration-normal) var(--ease-out);
 	}
 
 	.filter-btn:hover {
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
+		background: var(--occ-glass-bg-hover);
 	}
 
 	.filter-btn.active {
@@ -177,7 +185,7 @@
 	}
 
 	.empty p {
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		font-size: var(--font-size-sm);
 	}
 
@@ -189,7 +197,7 @@
 	}
 
 	.clear-btn:hover {
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	@media (min-width: 640px) {
