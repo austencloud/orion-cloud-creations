@@ -75,9 +75,10 @@
 		left: 0;
 		right: 0;
 		z-index: 50;
-		background: rgba(250, 249, 246, 0.95);
-		backdrop-filter: blur(4px);
-		border-bottom: 1px solid var(--occ-border-light);
+		background: var(--occ-glass-bg);
+		backdrop-filter: blur(var(--occ-glass-blur));
+		-webkit-backdrop-filter: blur(var(--occ-glass-blur));
+		border-bottom: 1px solid var(--occ-glass-border);
 	}
 
 	.nav {
@@ -102,6 +103,7 @@
 	.logo {
 		height: 2rem;
 		width: auto;
+		filter: invert(1) brightness(2);
 	}
 
 	.desktop-nav {
@@ -115,12 +117,12 @@
 		font-weight: 500;
 		letter-spacing: 0.025em;
 		text-transform: uppercase;
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		transition: color var(--duration-normal) var(--ease-out);
 	}
 
 	.nav-link:hover {
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	.actions {
@@ -133,13 +135,13 @@
 	.menu-btn {
 		position: relative;
 		padding: 0.5rem;
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		transition: color var(--duration-normal) var(--ease-out);
 	}
 
 	.cart-btn:hover,
 	.menu-btn:hover {
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	.icon {
@@ -155,8 +157,11 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-		border-top: 1px solid var(--occ-border-light);
+		border-top: 1px solid var(--occ-glass-border);
 		padding: 1rem 0 1.5rem;
+		background: rgba(10, 10, 30, 0.85);
+		backdrop-filter: blur(var(--occ-glass-blur));
+		-webkit-backdrop-filter: blur(var(--occ-glass-blur));
 	}
 
 	.mobile-link {
@@ -164,13 +169,13 @@
 		font-weight: 500;
 		letter-spacing: 0.025em;
 		text-transform: uppercase;
-		color: var(--occ-muted);
+		color: var(--occ-glass-text-dim);
 		padding: 0.5rem;
 		transition: color var(--duration-normal) var(--ease-out);
 	}
 
 	.mobile-link:hover {
-		color: var(--occ-charcoal);
+		color: var(--occ-glass-text);
 	}
 
 	@media (min-width: 1024px) {
