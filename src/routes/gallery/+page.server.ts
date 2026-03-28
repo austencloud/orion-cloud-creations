@@ -1,7 +1,15 @@
 import type { PageServerLoad } from './$types';
-import { getAllDisplayableProducts } from '$lib/server/products';
+import { getDisplayableProductsPage, getAvailableProducts } from '$lib/server/products';
 
 export const load: PageServerLoad = async () => {
-	const products = await getAllDisplayableProducts();
-	return { products };
+	const [firstPage, available] = await Promise.all([
+		getDisplayableProductsPage(24),
+		getAvailableProducts()
+	]);
+
+	return {
+		products: firstPage.products,
+		hasMore: firstPage.hasMore,
+		availableProducts: available
+	};
 };
