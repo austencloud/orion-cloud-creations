@@ -10,11 +10,11 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "@austencloud/backgrounds": "file:F:/_CODE/shared-packages/packages/backgrounds",
-    "@austencloud/media-manager": "file:F:/_CODE/shared-packages/packages/media-manager",
-    "@austencloud/media-spotlight": "file:F:/_CODE/shared-packages/packages/media-spotlight",
-    "@austencloud/sidebar": "file:F:/_CODE/shared-packages/packages/sidebar",
-    "@austencloud/theme": "file:F:/_CODE/shared-packages/packages/theme",
+    "@austencloud/backgrounds": "^0.1.1",
+    "@austencloud/media-manager": "file:../shared-packages/packages/media-manager",
+    "@austencloud/media-spotlight": "^1.0.2",
+    "@austencloud/sidebar": "^0.1.0",
+    "@austencloud/theme": "^0.1.0",
     "@aws-sdk/client-s3": "^3.750.0",
     "@fortawesome/fontawesome-free": "^7.2.0",
     "firebase": "^11.4.0",

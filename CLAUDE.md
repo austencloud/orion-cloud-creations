@@ -100,6 +100,17 @@ Same rules as global CLAUDE.md apply here. Additionally:
 
 ---
 
+## Shared Skills System
+
+OCC uses 7 shared skills from `@austencloud/claude-skills`: **commit**, **changelog**, **check**, **ai-bust**, **monolith**, **deadcode**, **audit**.
+
+- **Config:** `.claude/skills.config.json` declares which skills this project uses and project-specific variables.
+- **Sync:** `npx @austencloud/claude-skills sync` renders templates from the shared package into `.claude/skills/` and `.claude/agents/`.
+- **Do not edit synced files directly.** They have a managed-by comment at the top. Edits go to the template in `E:/shared-packages/packages/claude-skills/templates/` and then re-sync.
+- **Audit tooling:** `ac-audit` and `ac-evidence` CLI commands come from `@austencloud/code-quality` (not local scripts).
+
+---
+
 ## Dev Server
 
 ```bash
